@@ -22,6 +22,37 @@ Built as a **W3Schools.com** study site:
 
 - **27 नक्षत्र (Nakshatras)** — each with a Nepali explanation, English summary,
   personality characteristics, life-area effects and 2 remedies.
+
+<p align="center">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
+  
+</p>
+
 - **12 भाव (Houses)**, **12 राशि (Rashi)**, **9 ग्रह (Grahas)** — descriptions,
   characteristics, effects and remedies for each.
 - **27 graha × bhava** and **12 graha × rashi** combination interpretations.
