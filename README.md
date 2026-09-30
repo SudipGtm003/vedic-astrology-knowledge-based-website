@@ -9,7 +9,7 @@ learning and reference platform for Vedic Astrology , it include many hindusim m
 
 Built as a **W3Schools.com** study site:
 
-> यो शैक्षिक परियोजना हो। यहाँ दिइएका व्याख्याहरू अध्ययनका लागि हुन् र व्यक्तिगत hun 
+> This is my Bca 4th semester project  
 
 ## 1. What's in it
 
