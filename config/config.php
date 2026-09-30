@@ -7,7 +7,7 @@ const DB_NAME = 'vedic_astrology_learn';
 const DB_USER = 'root';
 const DB_PASS = '';
 
-const SITE_NAME    = 'Vedic Astrology Learn';
+const SITE_NAME    = 'वैदिक ज्योतिष सिकाइ';
 const SITE_TAGLINE = 'Nepal-focused bilingual Jyotish learning platform';
 const DEFAULT_LANG = 'np';
 

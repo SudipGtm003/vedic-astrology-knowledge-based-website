@@ -43,7 +43,7 @@ function rebuild_search_index(): int
              VALUES ("topic", :id, :title, :np, :en, :url)',
             [
                 ':id'    => (int) $t['id'],
-                ':title' => $t['name_np'] . ' ' . (string) $t['name_en'],
+                ':title' => (string) $t['name_np'],
                 ':np'    => mb_substr($bodyNp, 0, 60000),
                 ':en'    => mb_substr($bodyEn, 0, 60000),
                 ':url'   => 'views/topic.php?slug=' . $t['slug'],
@@ -61,7 +61,7 @@ function rebuild_search_index(): int
              VALUES ("course", :id, :title, :np, :en, :url)',
             [
                 ':id'    => (int) $c['id'],
-                ':title' => $c['title_np'] . ' ' . (string) $c['title_en'],
+                ':title' => (string) $c['title_np'],
                 ':np'    => mb_substr($c['title_np'] . ' | ' . (string) $c['description'], 0, 60000),
                 ':en'    => mb_substr((string) $c['title_en'], 0, 60000),
                 ':url'   => 'views/learn.php?course=' . $c['slug'],
@@ -80,7 +80,7 @@ function rebuild_search_index(): int
              VALUES ("lesson", :id, :title, :np, :en, :url)',
             [
                 ':id'    => (int) $l['id'],
-                ':title' => $l['title_np'] . ' ' . (string) $l['title_en'],
+                ':title' => (string) $l['title_np'],
                 ':np'    => mb_substr($l['title_np'] . ' | ' . $l['content_np'], 0, 60000),
                 ':en'    => mb_substr((string) $l['title_en'] . ' | ' . (string) $l['content_en'], 0, 60000),
                 ':url'   => 'views/learn.php?course=' . $l['course_slug'] . '&lesson=' . $l['slug'],
@@ -101,7 +101,7 @@ function rebuild_search_index(): int
              VALUES ("combo", :id, :title, :np, :en, :url)',
             [
                 ':id'    => $row['graha_id'] * 1000 + $row['bhava_id'],
-                ':title' => $row['gnp'] . ' ' . $row['gen'] . ' + ' . $row['bnp'] . ' ' . $row['ben'],
+                ':title' => $row['gnp'] . ' + ' . $row['bnp'],
                 ':np'    => $row['gnp'] . ' | ' . $row['gs'] . ' | ' . $row['bnp'] . ' | '
                            . $row['bs'] . ' | ' . $row['interpretation_np'],
                 ':en'    => $row['gen'] . ' | ' . $row['gs'] . ' | ' . $row['ben'] . ' | ' . $row['bs'],
@@ -123,7 +123,7 @@ function rebuild_search_index(): int
              VALUES ("combo", :id, :title, :np, :en, :url)',
             [
                 ':id'    => $row['graha_id'] * 1000 + 500 + $row['rashi_id'],
-                ':title' => $row['gnp'] . ' ' . $row['gen'] . ' + ' . $row['rnp'] . ' ' . $row['ren'],
+                ':title' => $row['gnp'] . ' + ' . $row['rnp'],
                 ':np'    => $row['gnp'] . ' | ' . $row['gs'] . ' | ' . $row['rnp'] . ' | '
                            . $row['rs'] . ' | ' . $row['interpretation_np'],
                 ':en'    => $row['gen'] . ' | ' . $row['gs'] . ' | ' . $row['ren'] . ' | ' . $row['rs'],

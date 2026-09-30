@@ -2,44 +2,10 @@
 
 declare(strict_types=1);
 
-function allowed_langs(): array
-{
-    return ['np', 'en'];
-}
-
 function current_lang(): string
 {
-    $lang = $_GET['lang'] ?? $_COOKIE['lang'] ?? DEFAULT_LANG;
-    $lang = is_string($lang) ? strtolower($lang) : DEFAULT_LANG;
-
-    if (!in_array($lang, allowed_langs(), true)) {
-        $lang = DEFAULT_LANG;
-    }
-
-    if (($_GET['lang'] ?? null) !== null && $_GET['lang'] !== $lang) {
-        setcookie('lang', $lang, [
-            'expires'  => time() + 60 * 60 * 24 * 365,
-            'path'     => '/',
-            'httponly' => false,
-            'samesite' => 'Lax',
-        ]);
-    }
-
-    return $lang;
-}
-
-function lang_toggle_url(): string
-{
-    $flip = current_lang() === 'np' ? 'en' : 'np';
-    $query = $_GET;
-    $query['lang'] = $flip;
-
-    return strtok((string) ($_SERVER['REQUEST_URI'] ?? ''), '?') . '?' . http_build_query($query);
-}
-
-function lang_toggle_label(): string
-{
-    return current_lang() === 'np' ? 'English' : 'नेपाली';
+    // साइट अहिले नेपाली मात्र
+    return 'np';
 }
 
 function bilingual(?string $np, ?string $en, bool $block = true): string

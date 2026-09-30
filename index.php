@@ -18,7 +18,7 @@ require __DIR__ . '/config/includes/header.php';
 ?>
 
 <div class="page-head">
-  <h1>Learn Vedic Astrology</h1>
+  <h1>वैदिक ज्योतिष सिकाइ</h1>
   <p class="muted">
     विषय छान्नुहोस् र व्यवस्थित रूपमा अध्ययन गर्नुहोस्। संस्कृत शब्दावली मूल रूपमा राखिएको छ।
   </p>
@@ -27,7 +27,6 @@ require __DIR__ . '/config/includes/header.php';
 <div class="grid grid-3">
   <?php foreach ($categories as $cat): ?>
     <a class="card card-link" href="views/topic.php?category=<?= e($cat['code']) ?>">
-      <div class="card-sanskrit"><?= e($cat['name_en']) ?></div>
       <div class="card-title"><?= e($cat['name_np']) ?></div>
       <div class="muted"><?= e((string) ($counts[(int) $cat['id']] ?? 0)) ?> विषय</div>
     </a>

@@ -65,21 +65,12 @@ $footerLearn = [
 
       <p class="footer-tagline">
         <?= e(bilingual_value(
-            'नेपालको द्विभाषिक वैदिक ज्योतिष शिक्षा मञ्च — पाठ र अभ्याससहित।',
-            'Nepal-focused bilingual Vedic astrology platform — lessons and practice.'
+            'नेपालको वैदिक ज्योतिष शिक्षा मञ्च — पाठ र अभ्याससहित।',
+            'Nepal-focused Vedic astrology platform — lessons and practice.'
         )) ?>
       </p>
 
       <div class="footer-actions">
-        <a class="footer-btn" href="<?= e(lang_toggle_url()) ?>">
-          <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true" focusable="false">
-            <circle cx="10" cy="10" r="7.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <ellipse cx="10" cy="10" rx="3.2" ry="7.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <line x1="2.8" y1="10" x2="17.2" y2="10" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          <?= e(lang_toggle_label()) ?>
-        </a>
-
         <a class="footer-btn footer-btn-solid" href="<?= e($base) ?>views/guide.php">
           <?= e(bilingual_value('सिकाइ सुरु गर्नुहोस्', 'Start Learning')) ?>
           <span aria-hidden="true">→</span>

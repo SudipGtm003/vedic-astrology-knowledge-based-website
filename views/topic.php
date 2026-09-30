@@ -214,7 +214,7 @@ require __DIR__ . '/../config/includes/header.php';
         </div>
         <h1><?= e($category['name_np']) ?></h1>
         <p class="muted">
-          <?= e($category['name_en']) ?> — <?= count($listing) ?> विषय उपलब्ध
+          <?= count($listing) ?> विषय उपलब्ध
         </p>
       </div>
 
@@ -236,7 +236,6 @@ require __DIR__ . '/../config/includes/header.php';
               <div class="card-sanskrit"><?= e($t['sanskrit_name']) ?></div>
             <?php endif; ?>
             <div class="card-title"><?= e(bilingual_value($t['name_np'], $t['name_en'])) ?></div>
-            <div class="muted"><?= e($t['name_en']) ?></div>
           </a>
         <?php endforeach; ?>
       </div>
@@ -254,7 +253,6 @@ require __DIR__ . '/../config/includes/header.php';
           <?= e($topic['name_np']) ?>
         </div>
         <h1><?= e($topic['name_np']) ?></h1>
-        <p class="muted"><?= e($topic['name_en']) ?></p>
 
         <?php if ($topic['sanskrit_name']): ?>
           <div class="sanskrit-block">

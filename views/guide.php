@@ -70,7 +70,7 @@ require __DIR__ . '/../config/includes/header.php';
     <section id="fundamentals" class="card" style="margin-bottom:1.25rem">
       <h2><?= e(bilingual_value('ज्योतिषको आधार', 'Astrology Fundamentals')) ?></h2>
       <?= bilingual(
-          'कुण्डली बनाउन सबैभन्दा पहिले लग्न (Ascendant) निर्धारण गरिन्छ — जन्मको समय र स्थानअनुसार पूर्व आकाशमा उठिएको राशि। लग्नदेखि पहिलो भाव सुरु हुन्छ र घडीको दिशामा बाह्र भाव गणना हुन्छन्।',
+          'कुण्डली बनाउन सबैभन्दा पहिले लग्न निर्धारण गरिन्छ — जन्मको समय र स्थानअनुसार पूर्व आकाशमा उठिएको राशि। लग्नदेखि पहिलो भाव सुरु हुन्छ र घडीको दिशामा बाह्र भाव गणना हुन्छन्।',
           'Building a chart starts with the lagna (Ascendant) — the sign rising in the eastern sky at the moment and place of birth. The first bhava begins at the lagna and the twelve houses are counted in the direction of the Earth\u2019s rotation.'
       ) ?>
       <?= bilingual(

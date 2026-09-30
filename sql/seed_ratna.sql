@@ -11,16 +11,16 @@
 USE vedic_astrology_learn;
 
 INSERT INTO topics (id, category_id, slug, sanskrit_name, name_en, name_np, sort_order, is_published) VALUES
-(80,10,'manik','पद्मराग','Ruby','माणिक (Ruby)',1,1),
-(81,10,'moti','मुक्ता','Pearl','मोती (Pearl)',2,1),
-(82,10,'munga','प्रवाल','Red Coral','मुंगा (Red Coral)',3,1),
-(83,10,'panna','मरकत','Emerald','पन्ना (Emerald)',4,1),
-(84,10,'pushparaj','पुष्पराग','Yellow Sapphire','पुष्पराज (Yellow Sapphire)',5,1),
-(85,10,'hira','वज्र','Diamond','हिरा (Diamond)',6,1),
-(86,10,'opal','ओपल','Opal','ओपल (Opal)',7,1),
-(87,10,'nilam','नीलम','Blue Sapphire','नीलम (Blue Sapphire)',8,1),
-(88,10,'gomed','गोमेद','Hessonite','गोमेद (Hessonite)',9,1),
-(89,10,'lahsuniya','वैदूर्य','Cats Eye','लहसुनीया (Cats Eye)',10,1);
+(80,10,'manik','पद्मराग','Ruby','माणिक',1,1),
+(81,10,'moti','मुक्ता','Pearl','मोती',2,1),
+(82,10,'munga','प्रवाल','Red Coral','मुंगा',3,1),
+(83,10,'panna','मरकत','Emerald','पन्ना',4,1),
+(84,10,'pushparaj','पुष्पराग','Yellow Sapphire','पुष्पराज',5,1),
+(85,10,'hira','वज्र','Diamond','हिरा',6,1),
+(86,10,'opal','ओपल','Opal','ओपल',7,1),
+(87,10,'nilam','नीलम','Blue Sapphire','नीलम',8,1),
+(88,10,'gomed','गोमेद','Hessonite','गोमेद',9,1),
+(89,10,'lahsuniya','वैदूर्य','Cats Eye','लहसुनीया',10,1);
 
 INSERT INTO topic_content (topic_id, summary_np, summary_en, characteristics, effects, classical_reference, sanskrit_term, sanskrit_meaning) VALUES
 (80,'माणिक नवरत्नमध्ये रत्नराज भनिने सूर्य ग्रहको प्रधान रत्न हो। संस्कृतमा यसलाई पद्मराग भनिन्छ, किनभने यसको गहिरो रातो रङले कमलजस्तो सुन्दर चमक दिन्छ। वैदिक ज्योतिषमा यसले जातकमा आत्मविश्वास, नेतृत्व क्षमता र शारीरिक ऊर्जा बढाउँछ भन्ने विश्वास गरिन्छ।',

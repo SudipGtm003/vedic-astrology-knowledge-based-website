@@ -20,21 +20,21 @@ if (is_post()) {
     $result = attempt_register($name, $email, $phone, $pass, $confirm);
 
     if ($result['ok']) {
-        flash('success', 'दर्ता सफल भयो। अब लगइन गर्नुहोस्।');
+        flash('success', 'Registration successful. Please sign in.');
         redirect('login.php');
     }
 
     $errors = $result['errors'];
 }
 
-$pageTitle = 'दर्ता';
+$pageTitle = 'Register';
 require __DIR__ . '/config/includes/header.php';
 ?>
 
 <div class="auth-wrap">
   <div class="card auth-card">
-    <h1>दर्ता गर्नुहोस्</h1>
-    <p class="muted">नयाँ खाता बनाउनुहोस् र पाठ्यक्रम सिक्न सुरु गर्नुहोस्।</p>
+    <h1>Create Account</h1>
+    <p class="muted">Create a new account and start learning.</p>
 
     <?php if ($errors !== []): ?>
       <div class="alert alert-error">
@@ -49,26 +49,26 @@ require __DIR__ . '/config/includes/header.php';
     <form method="post" action="register.php" novalidate>
       <?= csrf_field() ?>
 
-      <label for="name">पूरा नाम</label>
+      <label for="name">Full name</label>
       <input type="text" id="name" name="name" value="<?= e($name) ?>" required minlength="3">
 
-      <label for="email">इमेल ठेगाना</label>
+      <label for="email">Email address</label>
       <input type="email" id="email" name="email" value="<?= e($email) ?>" required>
 
-      <label for="phone_np">मोबाइल नम्बर <span class="muted">(ऐच्छिक)</span></label>
+      <label for="phone_np">Mobile number <span class="muted">(optional)</span></label>
       <input type="tel" id="phone_np" name="phone_np" placeholder="98XXXXXXXX" pattern="9[6-9][0-9]{8}">
 
-      <label for="password">पासवर्ड</label>
+      <label for="password">Password</label>
       <input type="password" id="password" name="password" required minlength="8">
-      <small class="muted">कम्तीमा ८ अक्षर, अक्षर र अंक दुवै चाहिन्छ।</small>
+      <small class="muted">At least 8 characters, with letters and numbers.</small>
 
-      <label for="password_confirm">पासवर्ड पुनः टाइप गर्नुहोस्</label>
+      <label for="password_confirm">Confirm password</label>
       <input type="password" id="password_confirm" name="password_confirm" required minlength="8">
 
-      <button type="submit" class="btn btn-primary btn-block">दर्ता गर्नुहोस्</button>
+      <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
 
-    <p class="auth-alt">पहिले नै खाता छ? <a href="login.php">लगइन गर्नुहोस्</a></p>
+    <p class="auth-alt">Already have an account? <a href="login.php">Sign in</a></p>
   </div>
 </div>
 

@@ -18,7 +18,7 @@ if (is_post()) {
     $password = post('password');
 
     if ($email === '' || $password === '') {
-        $error = 'इमेल र पासवर्ड दुवै आवश्यक छ।';
+        $error = 'Email and password are both required.';
     } else {
         $result = attempt_login($email, $password);
 
@@ -31,14 +31,14 @@ if (is_post()) {
     }
 }
 
-$pageTitle = 'लगइन';
+$pageTitle = 'Login';
 require __DIR__ . '/config/includes/header.php';
 ?>
 
 <div class="auth-wrap">
   <div class="card auth-card">
-    <h1>लगइन</h1>
-    <p class="muted">आफ्नो खातामा प्रवेश गर्नुहोस्।</p>
+    <h1>Login</h1>
+    <p class="muted">Sign in to your account.</p>
 
     <?php if ($error !== ''): ?>
       <div class="alert alert-error"><?= e($error) ?></div>
@@ -47,17 +47,17 @@ require __DIR__ . '/config/includes/header.php';
     <form method="post" action="login.php" novalidate>
       <?= csrf_field() ?>
 
-      <label for="email">इमेल ठेगाना</label>
+      <label for="email">Email address</label>
       <input type="email" id="email" name="email" value="<?= e($email) ?>" required autocomplete="email">
 
-      <label for="password">पासवर्ड</label>
+      <label for="password">Password</label>
       <input type="password" id="password" name="password" required autocomplete="current-password">
 
-      <button type="submit" class="btn btn-primary btn-block">लगइन गर्नुहोस्</button>
+      <button type="submit" class="btn btn-primary btn-block">Sign In</button>
     </form>
 
-    <p class="auth-alt">पासवर्ड बिर्सनुभयो? <a href="forgot.php">पासवर्ड रिसेट गर्नुहोस्</a></p>
-    <p class="auth-alt">खाता छैन? <a href="register.php">दर्ता गर्नुहोस्</a></p>
+    <p class="auth-alt">Forgot password? <a href="forgot.php">Reset password</a></p>
+    <p class="auth-alt">Don't have an account? <a href="register.php">Register</a></p>
   </div>
 </div>
 

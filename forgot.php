@@ -70,7 +70,7 @@ if (is_post()) {
             log_activity((int) $userId, 'reset_password', 'users', (int) $userId);
             unset($_SESSION['reset_user_id']);
 
-            flash('success', 'पासवर्ड परिवर्तन भयो। अब लगइन गर्नुहोस्।');
+            flash('success', 'Password changed. Please sign in.');
             redirect('login.php');
         }
     }

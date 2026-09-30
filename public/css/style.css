@@ -1249,8 +1249,6 @@ ul.plain li:last-child { border-bottom: 0; }
 body[data-lang="np"] .lang-en { display: none; }
 body[data-lang="en"] .lang-np { display: none; }
 
-.lang-toggle { font-weight: 600; }
-
 .lang-hint {
   font-size: .72rem;
   color: var(--ink-faint);

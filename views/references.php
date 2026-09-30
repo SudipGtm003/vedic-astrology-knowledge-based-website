@@ -30,7 +30,6 @@ $sections = [
     ['classical', 'शास्त्रीय सिद्धान्त', 'Classical Principles'],
     ['sanskrit', 'संस्कृत सन्दर्भ', 'Sanskrit References'],
     ['nepali', 'नेपाली अनुवाद', 'Nepali Translation'],
-    ['english', 'अंग्रेजी व्याख्या', 'English Explanation'],
     ['remedies', 'वैदिक उपाय', 'Vedic Remedies'],
 ];
 
@@ -107,22 +106,6 @@ require __DIR__ . '/../config/includes/header.php';
       <?= bilingual(
           'यो मञ्चको मूल भाषा नेपाली हो। सबै विषय, पाठ र क्विज नेपालीमा उपलब्ध छन्, जसले नेपाली माध्यमका विद्यार्थीलाई आफ्नै भाषामा अध्ययन गर्न सहज बनाउँछ।',
           'Nepali is the primary language of this platform. Every topic, lesson and quiz is available in Nepali, which makes study easier for students taught in Nepali medium.'
-      ) ?>
-      <?= bilingual(
-          'माथिको भाषा बटनबाट नेपाली र अंग्रेजी बीच सजिलै फेर्न सकिन्छ। तपाईंको छनोट कुकीमा सुरक्षित हुन्छ।',
-          'The language button above switches easily between Nepali and English, and your choice is stored in a cookie.'
-      ) ?>
-    </section>
-
-    <section id="english" class="card" style="margin-bottom:1.25rem">
-      <h2><?= e(bilingual_value('अंग्रेजी व्याख्या', 'English Explanation')) ?></h2>
-      <?= bilingual(
-          'अंग्रेजी मोडमा प्रत्येक विषयको सारांश, विशेषता र प्रभाव अंग्रेजीमा देखिन्छ। यसले अंग्रेजी माध्यमका विद्यार्थी र विदेशमा रहेका नेपालीहरूलाई सहयोग पुर्‍याउँछ।',
-          'In English mode the summary, characteristics and effects of every topic appear in English. This supports students from English medium schools as well as Nepalis living abroad.'
-      ) ?>
-      <?= bilingual(
-          'संस्कृत र देवनागरी पदहरू दुवै मोडमा उस्तै राखिन्छन्, किनभने ती मूल परिभाषा हुन्।',
-          'Sanskrit and Devanagari terms stay unchanged in both modes because they are the original terminology.'
       ) ?>
     </section>
 

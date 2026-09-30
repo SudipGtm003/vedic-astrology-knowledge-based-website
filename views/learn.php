@@ -17,22 +17,6 @@ if (is_post()) {
 
     $action = post('action');
 
-    if ($action === 'enroll') {
-        require_login();
-
-        $course = course_by_slug(post('course'));
-
-        if ($course === null) {
-            http_response_code(404);
-            exit('Course not found.');
-        }
-
-        enroll_user((int) current_user_id(), (int) $course['id']);
-        log_activity((int) current_user_id(), 'enroll_free', 'courses', (int) $course['id']);
-        flash('success', 'पाठ्यक्रममा दर्ता भयो। अब पाठहरू पढ्न सक्नुहुन्छ।');
-        redirect($base . 'views/learn.php?course=' . $course['slug']);
-    }
-
     if ($action === 'complete') {
         require_login();
 
@@ -76,6 +60,12 @@ $lessons    = [];
 $lesson     = null;
 
 if ($course !== null) {
+    // लगइन भएकालाई कोर्स खोल्दै नै स्वतः भर्ना (सबै कोर्स मुफ्त)
+    if ($userId !== null && !is_enrolled($userId, (int) $course['id'])) {
+        enroll_user($userId, (int) $course['id']);
+        log_activity($userId, 'enroll_free', 'courses', (int) $course['id']);
+    }
+
     $enrolled = $userId !== null && is_enrolled($userId, (int) $course['id']);
     $lessons  = course_lessons((int) $course['id'], $userId);
 
@@ -151,7 +141,7 @@ require __DIR__ . '/../config/includes/header.php';
         $cStats    = $cEnrolled ? course_stats((int) $c['id'], (int) $userId) : null;
       ?>
       <a class="card card-link" href="?course=<?= e($c['slug']) ?>">
-        <div class="card-sanskrit">मुफ्त / Free</div>
+        <div class="card-sanskrit">मुफ्त</div>
         <div class="card-title"><?= e(bilingual_value($c['title_np'], $c['title_en'])) ?></div>
         <p class="muted"><?= e(bilingual_value($c['description'], null)) ?></p>
         <?php if ($cStats !== null): ?>
@@ -212,17 +202,8 @@ require __DIR__ . '/../config/includes/header.php';
         <div class="card" style="margin-bottom:1rem">
           <h2>प्रवेश</h2>
           <p class="muted">पाठहरू पढ्न र क्विज दिन पहिले दर्ता हुनुपर्छ।</p>
-          <?php if ($userId === null): ?>
-            <a class="btn btn-primary" href="<?= e($base) ?>login.php">लगइन गर्नुहोस्</a>
-            <a class="btn btn-ghost" href="<?= e($base) ?>register.php">दर्ता गर्नुहोस्</a>
-          <?php else: ?>
-            <form method="post" action="">
-              <?= csrf_field() ?>
-              <input type="hidden" name="action" value="enroll">
-              <input type="hidden" name="course" value="<?= e($course['slug']) ?>">
-              <button type="submit" class="btn btn-primary">मुफ्तमा सिक्न थाल्नुहोस्</button>
-            </form>
-          <?php endif; ?>
+          <a class="btn btn-primary" href="<?= e($base) ?>login.php">लगइन गर्नुहोस्</a>
+          <a class="btn btn-ghost" href="<?= e($base) ?>register.php">दर्ता गर्नुहोस्</a>
         </div>
       <?php endif; ?>
 

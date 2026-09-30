@@ -71,7 +71,6 @@ $referenceMenu = [
     ['references.php#classical', 'शास्त्रीय सिद्धान्त', 'Classical Principles'],
     ['references.php#sanskrit', 'संस्कृत सन्दर्भ', 'Sanskrit References'],
     ['references.php#nepali', 'नेपाली अनुवाद', 'Nepali Translation'],
-    ['references.php#english', 'अंग्रेजी व्याख्या', 'English Explanation'],
     ['references.php#remedies', 'वैदिक उपाय', 'Vedic Remedies'],
 ];
 
@@ -103,8 +102,8 @@ $topicNavCats = fetch_all(
         <img src="<?= e($base) ?>public/img/ganesh.png" width="26" height="26" alt="">
       </span>
       <span class="brand-text">
-        <strong>Vedic Astrology Learn</strong>
-        <small>Learn • Explore • Understand</small>
+        <strong><?= e(SITE_NAME) ?></strong>
+        <small>सिकाइ • खोज • बुझाइ</small>
       </span>
     </a>
 
@@ -208,7 +207,7 @@ $topicNavCats = fetch_all(
     <div class="header-actions">
       <a class="nav-promo" href="<?= e($base) ?>views/mantras.php"
          title="<?= e(bilingual_value('मन्त्र सुन्नुहोस्', 'Listen to mantras')) ?>">
-        <span class="nav-promo-new">NEW</span>
+        <span class="nav-promo-new">नयाँ</span>
         <img src="<?= e($base) ?>public/img/om.png" width="24" height="24" alt="">
         <span class="nav-promo-text">
           <strong><?= e(bilingual_value('मन्त्र सुन्नुहोस्', 'Listen to Mantras')) ?></strong>
@@ -216,16 +215,12 @@ $topicNavCats = fetch_all(
         </span>
       </a>
 
-      <a class="btn btn-ghost lang-toggle" href="<?= e(lang_toggle_url()) ?>" title="Switch language">
-        <?= e(lang_toggle_label()) ?>
-      </a>
-
       <?php if (is_logged_in()): ?>
         <a class="btn btn-ghost" href="<?= e($base . home_link_for_role()) ?>"><?= e(bilingual_value('मेरो सिकाइ', 'My Learning')) ?></a>
         <a class="btn btn-ghost" href="<?= e($base) ?>profile.php"><?= e(bilingual_value('प्रोफाइल', 'Profile')) ?></a>
         <a class="btn btn-primary" href="<?= e($base) ?>logout.php"><?= e(bilingual_value('लगआउट', 'Logout')) ?></a>
       <?php else: ?>
-        <a class="btn btn-primary" href="<?= e($base) ?>login.php">Sign In</a>
+        <a class="btn btn-primary" href="<?= e($base) ?>login.php">लगइन</a>
       <?php endif; ?>
     </div>
 
