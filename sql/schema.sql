@@ -347,7 +347,7 @@ CREATE TABLE mantras (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ============================================================================
--- SECTION 8 : AUDIT LOG  (admin actions)
+-- SECTION 8 : AUDIT LOG  (audit trail)
 -- ============================================================================
 
 CREATE TABLE activity_log (

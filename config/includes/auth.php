@@ -113,16 +113,6 @@ function is_logged_in(): bool
     return current_user_id() !== null;
 }
 
-function current_user_role(): ?string
-{
-    return $_SESSION['user_role'] ?? null;
-}
-
-function is_admin(): bool
-{
-    return current_user_role() === 'admin';
-}
-
 function require_login(): void
 {
     if (!is_logged_in()) {
@@ -131,17 +121,7 @@ function require_login(): void
     }
 }
 
-function require_admin(): void
-{
-    require_login();
-
-    if (!is_admin()) {
-        http_response_code(403);
-        exit('Access denied. This area is restricted to administrators.');
-    }
-}
-
 function home_link_for_role(): string
 {
-    return is_admin() ? 'admin/index.php' : 'views/learn.php';
+    return 'views/learn.php';
 }

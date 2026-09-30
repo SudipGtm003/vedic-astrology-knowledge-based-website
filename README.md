@@ -10,8 +10,7 @@ BCA 4th Semester Project — a Nepal-focused, bilingual (Nepali, Sanskrit preser
 learning and reference platform for Vedic Astrology. It includes many Hindu mantras.
 
 Built as a **W3Schools-style** study site — top navigation, a fixed **विषय सूची** sidebar,
-topic pages with explanations and remedies, free courses with quizzes, a searchable index
-and an admin panel.
+topic pages with explanations and remedies, free courses with quizzes and a searchable index.
 
 > This is my BCA 4th semester project
 

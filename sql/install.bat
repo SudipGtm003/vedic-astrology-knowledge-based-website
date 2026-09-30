@@ -111,8 +111,6 @@ echo  Site      : http://localhost/vedic-astrology/
 echo  Admin     : admin@vedic.local  /  admin123
 echo.
 echo  Change the admin password right after the first login.
-echo  After content edits, rebuild the search index from the
-echo  admin panel (admin/search-rebuild.php).
 echo ============================================================
 echo.
 pause

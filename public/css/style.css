@@ -991,7 +991,6 @@ ul.plain li:last-child { border-bottom: 0; }
 .combo-empty { color: var(--ink-faint); padding: 2rem 0; text-align: center; }
 .loading { opacity: .5; pointer-events: none; }
 
-.admin-shell { display: grid; grid-template-columns: 220px 1fr; gap: 1.5rem; align-items: start; }
 .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
 .stat {
   background: var(--card);
@@ -1355,7 +1354,6 @@ body[data-lang="en"] .lang-np { display: none; }
   .nav-item.open > .dropdown { display: block; }
   .dropdown li a { padding: .5rem .75rem; }
 
-  .admin-shell { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {

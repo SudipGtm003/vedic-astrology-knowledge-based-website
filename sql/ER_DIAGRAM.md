@@ -70,7 +70,7 @@ Write this straight into the "Relationships" section.
 | 10 | `users` N → N `courses` | M:N | `enrollments` `UNIQUE(user_id, course_id)` | Prevents double-enrolment |
 | 11 | `users` N → N `lessons` | M:N | `lesson_progress` composite PK | Progress tracking |
 | 12 | `users` 1 → N `quiz_attempts` | 1:N | `quiz_attempts.user_id` | Attempt history |
-| 13 | `users` 1 → N `activity_log` | 1:N | `activity_log.user_id` | Admin audit |
+| 13 | `users` 1 → N `activity_log` | 1:N | `activity_log.user_id` | Audit trail |
 
 ---
 
@@ -122,7 +122,7 @@ This is the section examiners check. Argue each normal form explicitly.
 | **`ON DELETE RESTRICT` on `topics.category_id`** | Accidentally deleting a category must fail loudly, not silently remove 300 topics. |
 | **`ON DELETE SET NULL` on `rashis.ruler_graha_id`** | A sign's ruler is descriptive metadata; losing it is preferable to blocking the delete. |
 | **`search_index` as a derived table** | It is a read-optimised projection. Rebuilding it is cheap; never treat it as the source of truth. |
-| **`activity_log`** | Demonstrates the separation of authentication from authorisation, and gives the admin panel an audit trail. |
+| **`activity_log`** | Demonstrates the separation of authentication from authorisation and keeps an audit trail of user actions. |
 
 ---
 

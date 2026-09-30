@@ -12,12 +12,11 @@ $flash = take_flash();
 
 $requestPath = (string) (parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH) ?? '/');
 $isHome      = (bool) preg_match('#/(index\.php)?$#', $requestPath);
-$isAdminArea = str_contains($requestPath, '/admin/');
 $currentFile = basename((string) ($_SERVER['SCRIPT_NAME'] ?? ''));
 $currentCat  = (string) ($_GET['category'] ?? '');
 $currentSlug = (string) ($_GET['slug'] ?? '');
 
-if ($currentCat === '' && $currentSlug !== '' && !$isAdminArea) {
+if ($currentCat === '' && $currentSlug !== '') {
     $resolved = fetch_column(
         'SELECT c.code FROM topics t JOIN categories c ON c.id = t.category_id WHERE t.slug = :s LIMIT 1',
         [':s' => $currentSlug]
@@ -26,9 +25,7 @@ if ($currentCat === '' && $currentSlug !== '' && !$isAdminArea) {
 }
 
 $section = '';
-if ($isAdminArea) {
-    $section = 'admin';
-} elseif ($isHome) {
+if ($isHome) {
     $section = 'home';
 } elseif (in_array($currentFile, ['guide.php', 'learn.php', 'quiz.php'], true)) {
     $section = 'learn';
@@ -224,9 +221,6 @@ $topicNavCats = fetch_all(
       </a>
 
       <?php if (is_logged_in()): ?>
-        <?php if (is_admin()): ?>
-          <a class="btn btn-ghost" href="<?= e($base) ?>admin/index.php"><?= e(bilingual_value('एडमिन', 'Admin')) ?></a>
-        <?php endif; ?>
         <a class="btn btn-ghost" href="<?= e($base . home_link_for_role()) ?>"><?= e(bilingual_value('मेरो सिकाइ', 'My Learning')) ?></a>
         <a class="btn btn-ghost" href="<?= e($base) ?>profile.php"><?= e(bilingual_value('प्रोफाइल', 'Profile')) ?></a>
         <a class="btn btn-primary" href="<?= e($base) ?>logout.php"><?= e(bilingual_value('लगआउट', 'Logout')) ?></a>
