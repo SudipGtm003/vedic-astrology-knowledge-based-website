@@ -55,6 +55,37 @@ and an admin panel.
 - **12 भाव (Houses)**, **12 राशि (Rashi)**, **9 ग्रह (Grahas)** — descriptions,
   characteristics, effects and remedies for each.
 
+**9 ग्रह (Grahas)**
+
+<p align="center">
+  <img src="./public/img/graha/surya.png" alt="Surya" width="5%">
+  <img src="./public/img/graha/chandra.png" alt="Chandra" width="5%">
+  <img src="./public/img/graha/mangala.png" alt="Mangala" width="5%">
+  <img src="./public/img/graha/budha.png" alt="Budha" width="5%">
+  <img src="./public/img/graha/guru.png" alt="Guru" width="5%">
+  <img src="./public/img/graha/shukra.png" alt="Shukra" width="5%">
+  <img src="./public/img/graha/shani.png" alt="Shani" width="5%">
+  <img src="./public/img/graha/rahu.png" alt="Rahu" width="5%">
+  <img src="./public/img/graha/ketu.png" alt="Ketu" width="5%">
+</p>
+
+**12 राशि (Rashis)**
+
+<p align="center">
+  <img src="./public/img/rashi/mesha.png" alt="Mesha" width="5%">
+  <img src="./public/img/rashi/vrishabha.png" alt="Vrishabha" width="5%">
+  <img src="./public/img/rashi/mithuna.png" alt="Mithuna" width="5%">
+  <img src="./public/img/rashi/karka.png" alt="Karka" width="5%">
+  <img src="./public/img/rashi/simha.png" alt="Simha" width="5%">
+  <img src="./public/img/rashi/kanya.png" alt="Kanya" width="5%">
+  <img src="./public/img/rashi/tula.png" alt="Tula" width="5%">
+  <img src="./public/img/rashi/vrishchika.png" alt="Vrishchika" width="5%">
+  <img src="./public/img/rashi/dhanu.png" alt="Dhanu" width="5%">
+  <img src="./public/img/rashi/makara.png" alt="Makara" width="5%">
+  <img src="./public/img/rashi/kumbha.png" alt="Kumbha" width="5%">
+  <img src="./public/img/rashi/meena.png" alt="Meena" width="5%">
+</p>
+
 - **108 graha × bhava** (9 grahas × 12 houses) and **12 graha × rashi** combination
   interpretations in the **संयोजन विश्लेषण** tool.
 - **396 mantras** of every rashi, graha, nakshatra etc.
