@@ -7,139 +7,13 @@ Built as a **W3Schools-style** study site: top navigation, left sidebar, topic p
 explanations and remedies, a searchable index, free courses with quizzes, plus
 an admin panel.
 
-> यो शैक्षिक परियोजना हो। यहाँ दिइएका व्याख्याहरू अध्ययनका लागि हुन् र व्यक्तिगत
-> ज्योतिष परामर्शको विकल्प होइनन्।
+> यो शैक्षिक परियोजना हो। यहाँ दिइएका व्याख्याहरू अध्ययनका लागि हुन् र व्यक्तिगत hun 
+
+
 
 ---
 
-## 1. Requirements
-
-| Item | Version used | Notes |
-|------|--------------|-------|
-| XAMPP | any recent | Apache + MariaDB/MySQL |
-| PHP | 8.1+ (tested on **8.2.12**) | Apache module, no extra extensions needed |
-| MySQL / MariaDB | 10.4+ (tested on **10.4.32**) | utf8mb4 |
-
-No frameworks, no npm, no third-party PHP libraries. Vanilla PHP + PDO + MySQL, plain HTML/CSS/JS.
-
----
-
-## 2. Install (3 steps)
-
-### Step 1 — Put the project in `htdocs`
-
-Copy this folder to your web root and name it `vedic-astrology`:
-
-```
-C:\xampp\htdocs\vedic-astrology\      (or D:\xampp\htdocs\..., S:\xampp\htdocs\... )
-```
-
-### Step 2 — Create and fill the database
-
-Double-click:
-
-```
-sql\install.bat
-```
-
-It automatically finds `mysql.exe` in `C:\xampp` or `S:\xampp`. If yours is elsewhere:
-
-```
-cmd
-sql\install.bat root "" "D:\path\to\mysql.exe"
-```
-
-Arguments: `<mysql-user> <password> <path-to-mysql.exe>` (defaults: `root`, empty password).
-
-The script runs 11 steps and prints row counts at the end. Expected:
-
-```
-categories 10  |  topics 150 | topic_content 150 |  topic_remedies 87
-graha_bhava 27 | graha_rashi 12 | courses 3 | lessons 11 | quizzes 11
-mantras 396
-```
-
-Manual alternative (from `sql\`):
-
-```bat
-mysql -uroot < schema.sql
-mysql -uroot < seed_topics.sql
-mysql -uroot < seed_grahas.sql
-mysql -uroot < seed_rashis.sql
-mysql -uroot < seed_nakshatras.sql
-mysql -uroot < seed_panchanga.sql
-mysql -uroot < seed_combo_bhava_a.sql
-mysql -uroot < seed_combo_bhava_b.sql
-mysql -uroot < seed_combo_rashi.sql
-mysql -uroot < seed_courses.sql
-mysql -uroot < seed_ratna.sql
-mysql -uroot < seed_mantras.sql
-```
-
-> Order matters: `schema.sql` first (it creates the `vedic_astrology_learn` database and all
-> 21 tables), then any seed file.
-
-### Step 3 — Open the site
-
-```
-http://localhost/vedic-astrology/
-```
-
-**Admin login**
-
-```
-email    : admin@vedic.local
-password : admin123
-```
-
-Change this password right after the first login (admin → एडमिन).
-
----
-
-## 3. Project structure
-
-```
-vedic-astrology/
-├── index.php              home / dashboard
-├── login.php              login
-├── register.php           student registration
-├── logout.php             logout
-├── config/
-│   ├── config.php         constants, session, base_path(), language
-│   ├── db.php             PDO connection + prepared-statement helpers
-│   └── includes/
-│       ├── auth.php       require_login / require_admin / require_guest
-│       ├── security.php   CSRF, escaping (e()), rate limit, activity log
-│       ├── lang.php       bilingual helpers (bi_text, bi_paragraphs, ...)
-│       ├── course.php     enrolment, progress, quiz score
-│       ├── search.php     rebuild_search_index(), run_search()
-│       ├── header.php     top navigation + search box + language toggle
-│       └── footer.php
-├── views/
-│   ├── topic.php          category listing + single topic (explanations, remedies)
-│   ├── combo.php          graha × bhava and graha × rashi combinations
-│   ├── search.php         search results page
-│   ├── learn.php          course catalogue, course, lesson, progress
-│   └── quiz.php           quiz runner
-├── admin/
-│   ├── index.php          dashboard with live counts
-│   ├── topics.php         topic list
-│   ├── topic-edit.php     create / edit topic + content + remedies
-│   └── search-rebuild.php rebuild the FULLTEXT search index
-├── public/
-│   ├── css/style.css      all styling (responsive, print stylesheet)
-│   ├── js/main.js         language toggle, quiz, progress UI
-│   └── api/combo.php      JSON endpoint for combinations
-└── sql/
-    ├── schema.sql         DDL: 21 tables + admin seed
-    ├── seed_*.sql         seed content (see order in Step 2)
-    ├── install.bat        one-click installer
-    └── ER_DIAGRAM.md      entity-relationship diagram for the report
-```
-
----
-
-## 4. What's in it
+## 1. What's in it
 
 **Reference / study content**
 
@@ -149,54 +23,9 @@ vedic-astrology/
   characteristics, effects and remedies for each.
 - **27 graha × bhava** and **12 graha × rashi** combination interpretations.
 
-**Courses (learn)**
-
-- 3 courses, 11 lessons, one quiz per lesson.
-- Free courses enrol instantly — every course is free, there is no payment step.
-- Progress bar and quiz scoring for every lesson.
-
-**Search**
-
-- MySQL `FULLTEXT` index over titles + Nepali + English bodies, with a `LIKE` fallback.
-- Rebuildable from the admin panel (`admin/search-rebuild.php`).
-
-**Bilingual**
-
-- Nepali by default; the toggle switches to English.
-- Applied via `?lang=` URL parameter + cookie + `body[data-lang]` CSS.
-- Sanskrit/Devanagari names are always kept in original script.
-
-**Admin**
-
-- Dashboard counts, topic CRUD (content + remedies inline), search-index rebuild.
-
----
-
-## 5. Content note
+## 2. Content note
 
 - Topic explanations were written for this project from classical references
   (`Brihat Parashara Hora Shastra`, `Vedanga Jyotisha`, etc.).
 - All content is for **study purposes only** and is not a substitute for professional
   astrological advice.
-
----
-
-## 6. Security notes
-
-- All DB access uses PDO **prepared statements** (no string-concatenated SQL).
-- Passwords are stored as `bcrypt` hashes.
-- CSRF tokens on every form; output escaped through `e()`.
-- Session hardening (`httponly`, `samesite`) and a simple login rate limit.
-
----
-
-## 7. Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| `Access denied for user 'root'` | Your XAMPP MySQL has a password — pass it: `install.bat root yourpassword` |
-| `mysql.exe not found` | Give the full path as the 3rd argument of `install.bat` |
-| Page loads with no CSS | Move the whole folder **unchanged** into `htdocs` (paths are relative, any folder name works) and open it through Apache, not as a `file://` URL |
-| Nepali text shows as `????` | Import with `--default-character-set=utf8mb4`; DB is `utf8mb4_unicode_ci` |
-| Search returns nothing | Rebuild the index from **एडमिन → इन्डेक्स** |
-| `Fatal error: Cannot redeclare ...` | A file is being included twice — make sure you are running the copy in `htdocs`, not an old duplicate |
