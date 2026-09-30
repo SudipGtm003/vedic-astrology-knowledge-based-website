@@ -1,4 +1,5 @@
  <img src="./public/img/ganesh.png" alt="Vedic Astrology" width="100" height="auto">
+ <img src="./public/img/om.png" alt="Vedic Astrology" width="100" height="auto">
 # Vedic Astrology Learn
 
 Note : Who want to learn basic vedic astrology elements they can learn from this platform
