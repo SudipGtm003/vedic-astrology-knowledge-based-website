@@ -1,17 +1,15 @@
 # Vedic Astrology Learn
 
-BCA 4th Semester Project — a Nepal-focused, bilingual (Nepali / English, Sanskrit preserved)
-learning and reference platform for Vedic Astrology.
+Note : Who want to learn basic vedic astrology elements they can learn from this platform
 
-Built as a **W3Schools-style** study site: top navigation, left sidebar, topic pages with
-explanations and remedies, a searchable index, free courses with quizzes, plus
-an admin panel.
+BCA 4th Semester Project — a Nepal-focused, bilingual (Nepali, Sanskrit preserved)
+learning and reference platform for Vedic Astrology , it include many hindusim mantras.
+
+
+
+Built as a **W3Schools.com** study site:
 
 > यो शैक्षिक परियोजना हो। यहाँ दिइएका व्याख्याहरू अध्ययनका लागि हुन् र व्यक्तिगत hun 
-
-
-
----
 
 ## 1. What's in it
 
