@@ -24,33 +24,21 @@ Built as a **W3Schools.com** study site:
   personality characteristics, life-area effects and 2 remedies.
 
 <p align="center">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  <img src="./public/img/ganesh.png" width="5%">
-  <img src="./public//img//om.png" width="5%">
-  
+  <img src="./public/img/nakshatra/anuradha.png" alt="Anuradha" width="5%">
+  <img src="./public/img/nakshatra/bharani.png" alt="Bharani" width="5%">
+  <img src="./public/img/nakshatra/krittika.png" alt="Krittika" width="5%">
+   <img src="./public/img/nakshatra/mula.png" width="5%">
+   <img src="./public/img/nakshatra/punarvasu.png" width="5%">
+   <img src="./public/img/nakshatra/pushya.png" width="5%">
+   <img src="./public/img/nakshatra/rohini.png" width="5%">
+   <img src="./public/img/nakshatra/satabhisha.png" width="5%">
+    <img src="./public/img/nakshatra/sravana.png" width="5%">
+    <img src="./public/img/nakshatra/uttarabhadra.png" width="5%">
+    <img src="./public/img/nakshatra/uttaraphalguni.png" width="5%">
+    <img src="./public/img/nakshatra/uttarashada.png" width="5%">
+  <img src="./public/img/nakshatra/vishakha.png" width="5%">
+    <img src="./public/img/nakshatra/ashlesha.png" width="5%">
+      <img src="./public/img/nakshatra/ashwini.png" width="5%">
 </p>
 
 - **12 भाव (Houses)**, **12 राशि (Rashi)**, **9 ग्रह (Grahas)** — descriptions,
