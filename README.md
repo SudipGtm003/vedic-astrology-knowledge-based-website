@@ -27,7 +27,7 @@ Built as a **W3Schools.com** study site:
   (`Brihat Parashara Hora Shastra`, `Vedanga Jyotisha`, etc.).
 - All content is for **study purposes only** and is not a substitute for professional
   astrological advice.
-# sudipgautam.info.np
+<a href="sudipgautam.info.np">Visit Website</a>
 
 git add .
 git commit -m "Update project"
