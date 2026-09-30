@@ -31,8 +31,7 @@ Built as a **W3Schools.com** study site:
    <img src="./public/img/nakshatra/punarvasu.png" alt="Punarvasu" width="5%">
    <img src="./public/img/nakshatra/pushya.png" alt="Pushya" width="5%">
    <img src="./public/img/nakshatra/rohini.png" alt="Rohini" width="5%">
-   <img src="./public/img/nakshatra/satabhisha.png" alt="Satabhisha" width="5%">
-    <img src="./public/img/nakshatra/shatabhisha.png" alt="Shatabhisha" width="5%">
+   <img src="./public/img/nakshatra/shatabhisha.png" alt="Satabhisha" width="5%">
     <img src="./public/img/nakshatra/shravana.png" alt="Shravana" width="5%">
     <img src="./public/img/nakshatra/shravana.png" alt="Shravana" width="5%">
     <img src="./public/img/nakshatra/uttarabhadra.png" alt="Uttarabhadra" width="5%">
@@ -52,7 +51,11 @@ Built as a **W3Schools.com** study site:
     <img src="./public/img/nakshatra/uttarabhadra.png" alt="Uttarabhadra" width="5%">
     <img src="./public/img/nakshatra/uttaraphalguni.png" alt="Uttaraphalguni" width="5%">
     <img src="./public/img/nakshatra/uttarashada.png" alt="Uttarashada" width="5%">
-    
+    <img src="./public/img/nakshatra/vishakha.png" alt="Vishakha" width="5%">
+    <img src="./public/img/nakshatra/ashlesha.png" alt="Ashlesha" width="5%">
+    <img src="./public/img/nakshatra/ashwini.png" alt="Ashwini" width="5%">
+    <img src="./public/img/nakshatra/bharani.png" alt="Bharani" width="5%">
+    <img src="./public/img/nakshatra/chitra.png" alt="Chitra" width="5%">
 </p>
 
 - **12 भाव (Houses)**, **12 राशि (Rashi)**, **9 ग्रह (Grahas)** — descriptions,
