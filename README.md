@@ -27,22 +27,37 @@ Built as a **W3Schools.com** study site:
   <img src="./public/img/nakshatra/anuradha.png" alt="Anuradha" width="5%">
   <img src="./public/img/nakshatra/bharani.png" alt="Bharani" width="5%">
   <img src="./public/img/nakshatra/krittika.png" alt="Krittika" width="5%">
-   <img src="./public/img/nakshatra/mula.png" width="5%">
-   <img src="./public/img/nakshatra/punarvasu.png" width="5%">
-   <img src="./public/img/nakshatra/pushya.png" width="5%">
-   <img src="./public/img/nakshatra/rohini.png" width="5%">
-   <img src="./public/img/nakshatra/satabhisha.png" width="5%">
-    <img src="./public/img/nakshatra/sravana.png" width="5%">
-    <img src="./public/img/nakshatra/uttarabhadra.png" width="5%">
-    <img src="./public/img/nakshatra/uttaraphalguni.png" width="5%">
-    <img src="./public/img/nakshatra/uttarashada.png" width="5%">
-  <img src="./public/img/nakshatra/vishakha.png" width="5%">
-    <img src="./public/img/nakshatra/ashlesha.png" width="5%">
-      <img src="./public/img/nakshatra/ashwini.png" width="5%">
+   <img src="./public/img/nakshatra/moola.png" alt="Moola" width="5%">
+   <img src="./public/img/nakshatra/punarvasu.png" alt="Punarvasu" width="5%">
+   <img src="./public/img/nakshatra/pushya.png" alt="Pushya" width="5%">
+   <img src="./public/img/nakshatra/rohini.png" alt="Rohini" width="5%">
+   <img src="./public/img/nakshatra/satabhisha.png" alt="Satabhisha" width="5%">
+    <img src="./public/img/nakshatra/shatabhisha.png" alt="Shatabhisha" width="5%">
+    <img src="./public/img/nakshatra/shravana.png" alt="Shravana" width="5%">
+    <img src="./public/img/nakshatra/shravana.png" alt="Shravana" width="5%">
+    <img src="./public/img/nakshatra/uttarabhadra.png" alt="Uttarabhadra" width="5%">
+    <img src="./public/img/nakshatra/uttaraphalguni.png" alt="Uttaraphalguni" width="5%">
+    <img src="./public/img/nakshatra/uttarashada.png" alt="Uttarashada" width="5%">
+    <img src="./public/img/nakshatra/vishakha.png" alt="Vishakha" width="5%">
+    <img src="./public/img/nakshatra/ashlesha.png" alt="Ashlesha" width="5%">
+    <img src="./public/img/nakshatra/ashwini.png" alt="Ashwini" width="5%">
+    <img src="./public/img/nakshatra/bharani.png" alt="Bharani" width="5%">
+    <img src="./public/img/nakshatra/chitra.png" alt="Chitra" width="5%">
+    <img src="./public/img/nakshatra/dhanishta.png" alt="Dhanishta" width="5%">
+    <img src="./public/img/nakshatra/jyeshtha.png" alt="Jyeshtha" width="5%">
+    <img src="./public/img/nakshatra/mrigashirsha.png" alt="Mrigashirsha" width="5%">
+    <img src="./public/img/nakshatra/purvabhadra.png" alt="Purvabhadra" width="5%">
+    <img src="./public/img/nakshatra/purvaphalguni.png" alt="Purvaphalguni" width="5%">
+    <img src="./public/img/nakshatra/purvashada.png" alt="Purvashada" width="5%">
+    <img src="./public/img/nakshatra/uttarabhadra.png" alt="Uttarabhadra" width="5%">
+    <img src="./public/img/nakshatra/uttaraphalguni.png" alt="Uttaraphalguni" width="5%">
+    <img src="./public/img/nakshatra/uttarashada.png" alt="Uttarashada" width="5%">
+    
 </p>
 
 - **12 भाव (Houses)**, **12 राशि (Rashi)**, **9 ग्रह (Grahas)** — descriptions,
   characteristics, effects and remedies for each.
+
 - **27 graha × bhava** and **12 graha × rashi** combination interpretations.
 - **mantras** many mantras of every rashi , graha etc.
 ## 2. Content note
