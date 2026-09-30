@@ -212,6 +212,8 @@ echo json_encode([
     'career_indication'        => $combo['career_indication'],
     'financial_indication'     => $combo['financial_indication'],
     'relationship_indication'  => $combo['relationship_indication'],
+    'health_indication'        => $combo['health_indication'] ?? null,
+    'spiritual_indication'     => $combo['spiritual_indication'] ?? null,
     'classical_interpretation' => $combo['classical_interpretation'],
     'sanskrit_reference'       => $combo['sanskrit_reference'],
     'remedies'                 => $combo['remedies'],

@@ -986,8 +986,9 @@ ul.plain li:last-child { border-bottom: 0; }
   gap: 1rem;
   align-items: end;
 }
-.combo-result { margin-top: 1.5rem; }
+.combo-result { margin-top: 1.5rem; padding-bottom: 3.5rem; }
 .combo-result h2 { border-bottom: 2px solid var(--accent); padding-bottom: .5rem; }
+.combo-section { margin-top: 1.25rem; padding-top: .9rem; border-top: 1px dashed var(--line); }
 .combo-empty { color: var(--ink-faint); padding: 2rem 0; text-align: center; }
 .loading { opacity: .5; pointer-events: none; }
 

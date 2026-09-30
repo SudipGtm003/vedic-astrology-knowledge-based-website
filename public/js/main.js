@@ -22,36 +22,9 @@ const VAL = (() => {
     if (!endpoint) return;
 
     const result = document.getElementById('combo-result');
-    const graha = document.getElementById('graha_id');
-    const target = document.getElementById('target_type');
     const bhava = document.getElementById('bhava_id');
     const rashi = document.getElementById('rashi_id');
-    const nakshatra = document.getElementById('nakshatra_id');
-    const graha2 = document.getElementById('graha2_id');
-    const dashaMaha = document.getElementById('dasha_maha');
-    const dashaAntar = document.getElementById('dasha_antar');
-    const dashaPraty = document.getElementById('dasha_praty');
-
-    function showField(el, on) {
-      if (!el) return;
-      const field = el.closest('.field');
-      if (field) field.hidden = !on;
-    }
-
-    function syncVisibility() {
-      const type = target.value;
-      showField(graha, type !== 'dasha');
-      showField(bhava, type === 'bhava' || type === 'bhava_rashi');
-      showField(rashi, type === 'rashi' || type === 'bhava_rashi');
-      showField(nakshatra, type === 'nakshatra');
-      showField(graha2, type === 'graha_graha');
-      showField(dashaMaha, type === 'dasha');
-      showField(dashaAntar, type === 'dasha');
-      showField(dashaPraty, type === 'dasha');
-    }
-
-    target.addEventListener('change', syncVisibility);
-    syncVisibility();
+    const graha = document.getElementById('graha_id');
 
     function render(data) {
       if (!data || !data.found) {
@@ -69,7 +42,10 @@ const VAL = (() => {
         ['करियर', data.career_indication],
         ['वित्त', data.financial_indication],
         ['सम्बन्ध', data.relationship_indication],
+        ['स्वास्थ्य', data.health_indication],
+        ['आध्यात्मिक पक्ष', data.spiritual_indication],
         ['पारम्परिक व्याख्या', data.classical_interpretation],
+        ['शास्त्रीय स्रोत', data.sanskrit_reference],
         ['उपाय', data.remedies]
       ];
 
@@ -81,14 +57,12 @@ const VAL = (() => {
         ${blocks
           .filter(([, body]) => body && String(body).trim() !== '')
           .map(([heading, body]) => `
-            <h3>${heading}</h3>
-            <p>${escapeHtml(body)}</p>
+            <div class="combo-section">
+              <h3>${heading}</h3>
+              <p>${escapeHtml(body)}</p>
+            </div>
           `)
           .join('')}
-        ${data.sanskrit_reference ? `
-          <div class="sanskrit-block">
-            <strong>संस्कृत सन्दर्भ:</strong> ${escapeHtml(data.sanskrit_reference)}
-          </div>` : ''}
       `;
 
       result.innerHTML = html;
@@ -97,35 +71,18 @@ const VAL = (() => {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
+      if (!bhava.value || !rashi.value || !graha.value) {
+        result.innerHTML = '<p class="combo-empty">भाव, राशि र ग्रह चयन गर्नुहोस्।</p>';
+        return;
+      }
+
       const params = new URLSearchParams({
         action: 'combination',
-        graha_id: graha.value,
-        target_type: target.value
+        target_type: 'bhava_rashi',
+        bhava_id: bhava.value,
+        rashi_id: rashi.value,
+        graha_id: graha.value
       });
-
-      switch (target.value) {
-        case 'bhava':
-        case 'rashi':
-          params.set('target_id', target.value === 'bhava' ? bhava.value : rashi.value);
-          break;
-        case 'bhava_rashi':
-          params.set('bhava_id', bhava.value);
-          params.set('rashi_id', rashi.value);
-          break;
-        case 'nakshatra':
-          params.set('nakshatra_id', nakshatra.value);
-          break;
-        case 'graha_graha':
-          params.set('graha2_id', graha2.value);
-          break;
-        case 'dasha':
-          params.set('maha_id', dashaMaha.value);
-          params.set('antar_id', dashaAntar.value);
-          params.set('praty_id', dashaPraty.value);
-          break;
-        default:
-          params.set('target_id', bhava.value);
-      }
 
       result.classList.add('loading');
 
