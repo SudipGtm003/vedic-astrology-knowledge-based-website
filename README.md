@@ -20,10 +20,15 @@ Built as a **W3Schools.com** study site:
 - **12 भाव (Houses)**, **12 राशि (Rashi)**, **9 ग्रह (Grahas)** — descriptions,
   characteristics, effects and remedies for each.
 - **27 graha × bhava** and **12 graha × rashi** combination interpretations.
-
+- **mantras** many mantras of every rashi , graha etc.
 ## 2. Content note
 
 - Topic explanations were written for this project from classical references
   (`Brihat Parashara Hora Shastra`, `Vedanga Jyotisha`, etc.).
 - All content is for **study purposes only** and is not a substitute for professional
   astrological advice.
+
+
+git add .
+git commit -m "Update project"
+git push
