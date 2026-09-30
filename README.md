@@ -34,8 +34,8 @@ Built as a **W3Schools.com** study site:
    <img src="./public/img/nakshatra/shatabhisha.png" alt="Satabhisha" width="5%">
     <img src="./public/img/nakshatra/shravana.png" alt="Shravana" width="5%">
     <img src="./public/img/nakshatra/shravana.png" alt="Shravana" width="5%">
-    <img src="./public/img/nakshatra/uttarabhadra.png" alt="Uttarabhadra" width="5%">
-    <img src="./public/img/nakshatra/uttaraphalguni.png" alt="Uttaraphalguni" width="5%">
+    <img src="./public/img/nakshatra/uttara-bhadrapada.png" alt="Uttarabhadra" width="5%">
+    <img src="./public/img/nakshatra/uttara-phalguni.png" alt="Uttaraphalguni" width="5%">
     <img src="./public/img/nakshatra/uttarashada.png" alt="Uttarashada" width="5%">
     <img src="./public/img/nakshatra/vishakha.png" alt="Vishakha" width="5%">
     <img src="./public/img/nakshatra/ashlesha.png" alt="Ashlesha" width="5%">
