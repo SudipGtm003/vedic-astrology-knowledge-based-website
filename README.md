@@ -1,6 +1,6 @@
  <p align="center">
-  <img src="./public/img/ganesh.png" width="30%">
-  <img src="./public//img//om.png" width="30%">
+  <img src="./public/img/ganesh.png" width="5%">
+  <img src="./public//img//om.png" width="5%">
   
 </p>
 # Vedic Astrology Learn
