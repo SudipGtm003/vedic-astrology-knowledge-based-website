@@ -77,6 +77,7 @@ require __DIR__ . '/config/includes/header.php';
 
     <p style="margin-top:1.25rem">
       <a class="btn btn-primary" href="<?= e($base . home_link_for_role()) ?>"><?= e(bilingual_value('मेरो सिकाइ', 'My Learning')) ?></a>
+      <a class="btn btn-ghost" href="<?= e($base) ?>edit-profile.php"><?= e(bilingual_value('प्रोफाइल सम्पादन', 'Edit Profile')) ?></a>
       <a class="btn btn-ghost" href="<?= e($base) ?>logout.php"><?= e(bilingual_value('लगआउट', 'Logout')) ?></a>
     </p>
   </section>

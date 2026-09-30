@@ -56,6 +56,7 @@ require __DIR__ . '/config/includes/header.php';
       <button type="submit" class="btn btn-primary btn-block">लगइन गर्नुहोस्</button>
     </form>
 
+    <p class="auth-alt">पासवर्ड बिर्सनुभयो? <a href="forgot.php">पासवर्ड रिसेट गर्नुहोस्</a></p>
     <p class="auth-alt">खाता छैन? <a href="register.php">दर्ता गर्नुहोस्</a></p>
   </div>
 </div>
