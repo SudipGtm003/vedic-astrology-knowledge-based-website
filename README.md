@@ -1,3 +1,4 @@
+ <img src="https://sudipgautam.info.np/images/vedic-astrology.jpg" alt="Vedic Astrology" width="200" height="200">
 # Vedic Astrology Learn
 
 Note : Who want to learn basic vedic astrology elements they can learn from this platform
