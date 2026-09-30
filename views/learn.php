@@ -1,0 +1,306 @@
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/../config/includes/auth.php';
+require_once __DIR__ . '/../config/includes/lang.php';
+require_once __DIR__ . '/../config/includes/course.php';
+
+$base = base_path();
+
+$courseSlug = get('course');
+$lessonSlug = get('lesson');
+$mode       = $lessonSlug !== '' ? 'lesson' : ($courseSlug !== '' ? 'course' : 'catalog');
+
+if (is_post()) {
+    require_csrf();
+
+    $action = post('action');
+
+    if ($action === 'enroll') {
+        require_login();
+
+        $course = course_by_slug(post('course'));
+
+        if ($course === null) {
+            http_response_code(404);
+            exit('Course not found.');
+        }
+
+        enroll_user((int) current_user_id(), (int) $course['id']);
+        log_activity((int) current_user_id(), 'enroll_free', 'courses', (int) $course['id']);
+        flash('success', 'पाठ्यक्रममा दर्ता भयो। अब पाठहरू पढ्न सक्नुहुन्छ।');
+        redirect($base . 'views/learn.php?course=' . $course['slug']);
+    }
+
+    if ($action === 'complete') {
+        require_login();
+
+        $course = course_by_slug(post('course'));
+        $lesson = post_int('lesson_id');
+
+        if ($course === null || $lesson <= 0) {
+            redirect($base . 'views/learn.php');
+        }
+
+        if (!is_enrolled((int) current_user_id(), (int) $course['id'])) {
+            flash('warning', 'पहिले पाठ्यक्रममा दर्ता हुनुहोस्।');
+            redirect($base . 'views/learn.php?course=' . $course['slug']);
+        }
+
+        execute(
+            'INSERT INTO lesson_progress (user_id, lesson_id, is_completed, completed_at)
+             VALUES (:u, :l, 1, NOW())
+             ON DUPLICATE KEY UPDATE is_completed = 1, completed_at = NOW()',
+            [':u' => (int) current_user_id(), ':l' => $lesson]
+        );
+
+        log_activity((int) current_user_id(), 'lesson_complete', 'lessons', $lesson);
+
+        flash('success', 'पाठ पूरा भयो।');
+
+        $lessonRow = fetch_one('SELECT slug FROM lessons WHERE id = :id', [':id' => $lesson]);
+
+        redirect(
+            $base . 'views/learn.php?course=' . $course['slug']
+            . ($lessonRow !== null ? '&lesson=' . $lessonRow['slug'] : '')
+        );
+    }
+}
+
+$course     = course_by_slug($courseSlug);
+$userId     = current_user_id();
+$enrolled   = false;
+$stats      = ['total' => 0, 'done' => 0, 'percent' => 0];
+$lessons    = [];
+$lesson     = null;
+
+if ($course !== null) {
+    $enrolled = $userId !== null && is_enrolled($userId, (int) $course['id']);
+    $lessons  = course_lessons((int) $course['id'], $userId);
+
+    if ($enrolled) {
+        $stats = course_stats((int) $course['id'], $userId);
+    }
+
+    if ($mode === 'lesson') {
+        $lesson = lesson_by_slug((int) $course['id'], $lessonSlug);
+    }
+}
+
+if ($mode !== 'catalog' && $course === null) {
+    http_response_code(404);
+    $pageTitle = 'पाठ्यक्रम फेला परेन';
+    require __DIR__ . '/../config/includes/header.php';
+    echo '<div class="page-head"><h1>४०४ — पाठ्यक्रम फेला परेन</h1>
+          <p class="muted">तपाईंले खोजेको पाठ्यक्रम हाम्रो डाटाबेसमा छैन।</p>
+          <p><a class="btn btn-primary" href="' . e($base) . 'views/learn.php">सबै पाठ्यक्रम हेर्नुहोस्</a></p></div>';
+    require __DIR__ . '/../config/includes/footer.php';
+    exit;
+}
+
+if ($mode === 'lesson' && $lesson === null) {
+    http_response_code(404);
+    $pageTitle = 'पाठ फेला परेन';
+    require __DIR__ . '/../config/includes/header.php';
+    echo '<div class="page-head"><h1>४०४ — पाठ फेला परेन</h1>
+          <p class="muted">तपाईंले खोजेको पाठ उपलब्ध छैन।</p>
+          <p><a class="btn btn-primary" href="' . e($base) . 'views/learn.php?course=' . e($courseSlug) . '">पाठ्यक्रममा फर्कनुहोस्</a></p></div>';
+    require __DIR__ . '/../config/includes/footer.php';
+    exit;
+}
+
+if ($mode === 'lesson') {
+    require_login();
+
+    if (!$enrolled) {
+        flash('warning', 'यो पाठ पढ्न पहिले पाठ्यक्रममा दर्ता हुनुपर्छ।');
+        redirect($base . 'views/learn.php?course=' . $course['slug']);
+    }
+
+    $pageTitle = bilingual_value($lesson['title_np'], $lesson['title_en']);
+} elseif ($mode === 'course') {
+    $pageTitle = bilingual_value($course['title_np'], $course['title_en']);
+} else {
+    $pageTitle = 'पाठ्यक्रम';
+}
+
+$allCourses = fetch_all(
+    'SELECT id, slug, title_np, title_en, description
+     FROM courses WHERE is_published = 1 ORDER BY id'
+);
+
+require __DIR__ . '/../config/includes/header.php';
+?>
+
+<?php if ($mode === 'catalog'): ?>
+
+  <div class="page-head">
+    <h1>पाठ्यक्रम</h1>
+    <p class="muted">व्यवस्थित पाठ र क्विजसहितको द्विभाषिक पाठ्यक्रम।</p>
+  </div>
+
+  <?php if ($allCourses === []): ?>
+    <div class="card"><p class="muted">अहिले कुनै पाठ्यक्रम उपलब्ध छैन।</p></div>
+  <?php endif; ?>
+
+  <div class="grid grid-2">
+    <?php foreach ($allCourses as $c): ?>
+      <?php
+        $cEnrolled = $userId !== null && is_enrolled($userId, (int) $c['id']);
+        $cStats    = $cEnrolled ? course_stats((int) $c['id'], (int) $userId) : null;
+      ?>
+      <a class="card card-link" href="?course=<?= e($c['slug']) ?>">
+        <div class="card-sanskrit">मुफ्त / Free</div>
+        <div class="card-title"><?= e(bilingual_value($c['title_np'], $c['title_en'])) ?></div>
+        <p class="muted"><?= e(bilingual_value($c['description'], null)) ?></p>
+        <?php if ($cStats !== null): ?>
+          <div class="muted"><?= (int) $cStats['done'] ?>/<?= (int) $cStats['total'] ?> पाठ पूरा — <?= (int) $cStats['percent'] ?>%</div>
+        <?php else: ?>
+          <div class="muted">प्रवेश गर्नुहोस् →</div>
+        <?php endif; ?>
+      </a>
+    <?php endforeach; ?>
+  </div>
+
+<?php else: ?>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h4><?= e(bilingual_value($course['title_np'], $course['title_en'])) ?></h4>
+
+    <?php if ($enrolled): ?>
+      <p class="muted" style="margin-bottom:.5rem"><?= (int) $stats['done'] ?>/<?= (int) $stats['total'] ?> पाठ पूरा</p>
+      <div class="progress-bar"><span style="width:<?= (int) $stats['percent'] ?>%"></span></div>
+    <?php endif; ?>
+
+    <ul>
+      <?php foreach ($lessons as $l): ?>
+        <li data-filter-item>
+          <a href="?course=<?= e($course['slug']) ?>&lesson=<?= e($l['slug']) ?>"
+             class="<?= $lesson !== null && (int) $lesson['id'] === (int) $l['id'] ? 'active' : '' ?>">
+            <?php if (!empty($l['is_completed'])): ?><span class="badge badge-on">✓</span> <?php endif; ?>
+            <?= e(bilingual_value($l['title_np'], $l['title_en'])) ?>
+          </a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+
+    <p style="margin-top:1rem"><a href="<?= e($base) ?>views/learn.php" class="btn btn-ghost btn-sm">← सबै पाठ्यक्रम</a></p>
+  </aside>
+
+  <div class="content">
+
+    <?php if ($mode === 'course'): ?>
+
+      <div class="page-head">
+        <div class="breadcrumb">
+          <a href="<?= e($base) ?>views/learn.php">पाठ्यक्रम</a> /
+          <?= e(bilingual_value($course['title_np'], $course['title_en'])) ?>
+        </div>
+        <h1><?= e(bilingual_value($course['title_np'], $course['title_en'])) ?></h1>
+        <p class="muted">मुफ्त पाठ्यक्रम · <?= count($lessons) ?> पाठ</p>
+      </div>
+
+      <?php if (trim((string) $course['description'])): ?>
+        <div class="card" style="margin-bottom:1rem">
+          <?= bi_paragraphs($course['description'], false) ?>
+        </div>
+      <?php endif; ?>
+
+      <?php if (!$enrolled): ?>
+        <div class="card" style="margin-bottom:1rem">
+          <h2>प्रवेश</h2>
+          <p class="muted">पाठहरू पढ्न र क्विज दिन पहिले दर्ता हुनुपर्छ।</p>
+          <?php if ($userId === null): ?>
+            <a class="btn btn-primary" href="<?= e($base) ?>login.php">लगइन गर्नुहोस्</a>
+            <a class="btn btn-ghost" href="<?= e($base) ?>register.php">दर्ता गर्नुहोस्</a>
+          <?php else: ?>
+            <form method="post" action="">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="enroll">
+              <input type="hidden" name="course" value="<?= e($course['slug']) ?>">
+              <button type="submit" class="btn btn-primary">मुफ्तमा सिक्न थाल्नुहोस्</button>
+            </form>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
+
+      <div class="card">
+        <h2>पाठहरू</h2>
+        <div class="grid grid-2">
+          <?php foreach ($lessons as $i => $l): ?>
+            <?php if ($enrolled): ?>
+              <a class="card card-link" href="?course=<?= e($course['slug']) ?>&lesson=<?= e($l['slug']) ?>">
+                <div class="card-index"><?= $i + 1 ?></div>
+                <div class="card-title" style="font-size:1rem"><?= e(bilingual_value($l['title_np'], $l['title_en'])) ?></div>
+                <?php if (!empty($l['is_completed'])): ?><span class="badge badge-on">पूरा भयो</span><?php endif; ?>
+              </a>
+            <?php else: ?>
+              <div class="card">
+                <div class="card-index"><?= $i + 1 ?></div>
+                <div class="card-title" style="font-size:1rem"><?= e(bilingual_value($l['title_np'], $l['title_en'])) ?></div>
+                <span class="badge badge-off">ताला</span>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+    <?php else: ?>
+
+      <div class="page-head">
+        <div class="breadcrumb">
+          <a href="<?= e($base) ?>views/learn.php">पाठ्यक्रम</a> /
+          <a href="?course=<?= e($course['slug']) ?>"><?= e(bilingual_value($course['title_np'], $course['title_en'])) ?></a> /
+          <?= e(bilingual_value($lesson['title_np'], $lesson['title_en'])) ?>
+        </div>
+        <h1><?= e(bilingual_value($lesson['title_np'], $lesson['title_en'])) ?></h1>
+      </div>
+
+      <div class="card" style="margin-bottom:1rem">
+        <?= bilingual_paragraphs($lesson['content_np'], $lesson['content_en']) ?>
+      </div>
+
+      <?php
+        $progress = fetch_one(
+            'SELECT is_completed FROM lesson_progress WHERE user_id = :u AND lesson_id = :l',
+            [':u' => (int) $userId, ':l' => (int) $lesson['id']]
+        );
+        $isDone   = $progress !== null && (int) $progress['is_completed'] === 1;
+        $quiz     = fetch_one('SELECT id FROM quizzes WHERE lesson_id = :l', [':l' => (int) $lesson['id']]);
+        $next     = next_lesson($lessons, (int) $lesson['id']);
+      ?>
+
+      <div class="card" style="margin-bottom:1rem">
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+          <?php if (!$isDone): ?>
+            <form method="post" action="">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="complete">
+              <input type="hidden" name="course" value="<?= e($course['slug']) ?>">
+              <input type="hidden" name="lesson_id" value="<?= (int) $lesson['id'] ?>">
+              <button type="submit" class="btn btn-primary">पाठ पूरा भयो भन्नुहोस्</button>
+            </form>
+          <?php else: ?>
+            <span class="badge badge-on">यो पाठ पूरा भयो</span>
+          <?php endif; ?>
+
+          <?php if ($quiz !== null): ?>
+            <a class="btn btn-ghost" href="<?= e($base) ?>views/quiz.php?course=<?= e($course['slug']) ?>&lesson=<?= e($lesson['slug']) ?>">क्विज दिनुहोस्</a>
+          <?php endif; ?>
+
+          <?php if ($next !== null): ?>
+            <a class="btn btn-ghost" href="?course=<?= e($course['slug']) ?>&lesson=<?= e($next['slug']) ?>">अर्को पाठ →</a>
+          <?php endif; ?>
+        </div>
+      </div>
+
+    <?php endif; ?>
+
+  </div>
+</div>
+
+<?php endif; ?>
+
+<?php require __DIR__ . '/../config/includes/footer.php'; ?>
