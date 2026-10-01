@@ -6,6 +6,91 @@ require_once __DIR__ . '/../config/includes/auth.php';
 require_once __DIR__ . '/../config/includes/lang.php';
 require_once __DIR__ . '/../config/includes/course.php';
 
+// पाठको पाठ्य-सामग्री: तालिका, सूची, शीर्षक र साधारण प्याराग्राफ छुट्याएर देखाउँछ।
+function lesson_links(string $escaped): string
+{
+    return preg_replace('/\[([^\]]+)\]\(([^()\s]+)\)/', '<a href="$2">$1</a>', $escaped) ?? $escaped;
+}
+
+function lesson_table(array $rows): string
+{
+    $head = '';
+    $body = '';
+
+    foreach (array_values($rows) as $i => $row) {
+        $cells = array_map('trim', explode('|', $row));
+
+        if ($i === 0) {
+            foreach ($cells as $cell) {
+                $head .= '<th>' . lesson_links(e($cell)) . '</th>';
+            }
+            continue;
+        }
+
+        $body .= '<tr>';
+        foreach ($cells as $cell) {
+            $body .= '<td>' . lesson_links(e($cell)) . '</td>';
+        }
+        $body .= '</tr>';
+    }
+
+    return '<div class="table-wrap"><table><thead><tr>' . $head . '</tr></thead><tbody>'
+        . $body . '</tbody></table></div>';
+}
+
+function lesson_body(string $text): string
+{
+    $lines = array_filter(array_map('trim', preg_split('/\r\n|\r|\n+/', $text) ?: []));
+
+    if ($lines === []) {
+        return '<p class="muted">उपलब्ध छैन।</p>';
+    }
+
+    $groups = [];
+    foreach ($lines as $line) {
+        $type = str_contains($line, ' | ')
+            ? 'table'
+            : (str_starts_with($line, '• ') ? 'bullet' : 'text');
+
+        if ($groups === [] || $groups[count($groups) - 1]['type'] !== $type) {
+            $groups[] = ['type' => $type, 'lines' => []];
+        }
+        $groups[count($groups) - 1]['lines'][] = $type === 'bullet' ? substr($line, 2) : $line;
+    }
+
+    $html = '';
+    foreach ($groups as $group) {
+        if ($group['type'] === 'table') {
+            $html .= lesson_table($group['lines']);
+            continue;
+        }
+
+        if ($group['type'] === 'bullet') {
+            $html .= '<ul class="plain"><li>';
+            $html .= implode('</li><li>', array_map(
+                fn (string $li): string => lesson_links(e($li)),
+                $group['lines']
+            ));
+            $html .= '</li></ul>';
+            continue;
+        }
+
+        foreach ($group['lines'] as $line) {
+            $numbered = preg_match('/^[0-9०-९]+\.\s/u', $line) === 1;
+            $isHeading = mb_strlen($line) <= 60
+                && !str_contains($line, '।')
+                && !str_starts_with($line, '→')
+                && ($numbered || (!str_contains($line, ':') && !str_contains($line, ' — ')));
+
+            $html .= $isHeading
+                ? '<h4>' . lesson_links(e($line)) . '</h4>'
+                : '<p>' . lesson_links(e($line)) . '</p>';
+        }
+    }
+
+    return $html;
+}
+
 $base = base_path();
 
 $courseSlug = get('course');
@@ -236,7 +321,7 @@ require __DIR__ . '/../config/includes/header.php';
       </div>
 
       <div class="card" style="margin-bottom:1rem">
-        <?= bilingual_paragraphs($lesson['content_np'], $lesson['content_en']) ?>
+        <?= lesson_body(bilingual_value($lesson['content_np'], $lesson['content_en'])) ?>
       </div>
 
       <?php
