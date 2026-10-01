@@ -631,6 +631,12 @@ html { scroll-padding-top: 118px; }
 }
 
 .card-index { font-family: var(--font); color: var(--brand-mid); font-size: .85rem; font-weight: 700; }
+.card-emoji {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem; margin-bottom: .6rem;
+  border-radius: .7rem; background: var(--brand-soft);
+  border: 1px solid var(--brand-line); font-size: 1.35rem;
+}
 .card-title { font-family: var(--font); font-size: 1.1rem; margin: .15rem 0 .3rem; color: var(--brand-dark); }
 .card-sanskrit { color: var(--ink-faint); font-size: .8rem; font-style: italic; }
 

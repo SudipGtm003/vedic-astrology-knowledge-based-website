@@ -112,13 +112,26 @@ if ($mode === 'lesson') {
 } elseif ($mode === 'course') {
     $pageTitle = bilingual_value($course['title_np'], $course['title_en']);
 } else {
-    $pageTitle = 'पाठ्यक्रम';
+    $pageTitle = 'ज्योतिष सिक्नुहोस्';
 }
 
 $allCourses = fetch_all(
     'SELECT id, slug, title_np, title_en, description
-     FROM courses WHERE is_published = 1 ORDER BY id'
+     FROM courses WHERE is_published = 1 AND slug <> \'jyotish-siknuhos\' ORDER BY id'
 );
+
+$learnCards = [
+    ['📖', 'कुण्डली कसरी पढ्ने', 'सुरुदेखि — आधारभूत प्रक्रिया र क्रम।', 'kundali-kasari-padhne'],
+    ['♈', '१२ राशि', 'प्रत्येकको स्वभाव, स्वामी, र विशेषताहरू।', 'rashi-parichay'],
+    ['⭐', '२७ नक्षत्र', 'चन्द्रको आकाशीय गृह — नाम, स्वामी, विषयवस्तु।', 'nakshatra-parichay'],
+    ['🪐', '९ ग्रह', 'सूर्यदेखि केतुसम्म — मनोविज्ञान र महत्त्व।', 'graha-parichay'],
+    ['🏠', '१२ भाव', 'जीवनका १२ क्षेत्र — कसरी पढ्ने।', 'bhava-parichay'],
+    ['🕉️', 'पञ्चाङ्ग', 'तिथि, नक्षत्र, योग, करण, वार।', 'panchanga-parichay'],
+    ['⏳', 'विंशोत्तरी दशा', '९ ग्रहीय अवधिको १२० वर्षे चक्र।', 'vimshottari-dasha'],
+    ['✨', 'मुख्य योगहरू', 'गजकेसरी, राज, धन, र अरू महत्त्वपूर्ण योग।', 'mukhya-yogaharu'],
+    ['👁️', 'दृष्टि', 'ग्रहहरू अरू भावलाई कसरी हेर्छन्।', 'drishti'],
+    ['🔑', 'विशेष अवधारणा', 'उच्च, नीच, अस्त, वक्री, स्व-राशि — सबै।', 'vishesh-avdharana'],
+];
 
 require __DIR__ . '/../config/includes/header.php';
 ?>
@@ -126,8 +139,23 @@ require __DIR__ . '/../config/includes/header.php';
 <?php if ($mode === 'catalog'): ?>
 
   <div class="page-head">
-    <h1>पाठ्यक्रम</h1>
-    <p class="muted">व्यवस्थित पाठ र क्विजसहितको द्विभाषिक पाठ्यक्रम।</p>
+    <h1>ज्योतिष सिक्नुहोस्</h1>
+    <p class="muted">तल दिइएका हरेक खण्डले कुण्डलीको एउटा महत्त्वपूर्ण पाटो छुट्टै सिकाउँछ। क्रमशः पढ्नुहोस् — सजिलैसँग वैदिक ज्योतिषको आधार बुझ्न सकिनेछ।</p>
+  </div>
+
+  <div class="grid grid-4">
+    <?php foreach ($learnCards as $card): ?>
+      <a class="card card-link" href="?course=jyotish-siknuhos<?= is_logged_in() ? '&lesson=' . e($card[3]) : '' ?>">
+        <div class="card-emoji"><?= e($card[0]) ?></div>
+        <div class="card-title"><?= e($card[1]) ?></div>
+        <p class="muted"><?= e($card[2]) ?></p>
+      </a>
+    <?php endforeach; ?>
+  </div>
+
+  <div class="page-head" style="margin-top:2.5rem">
+    <h2>पाठ्यक्रमहरू</h2>
+    <p class="muted">व्यवस्थित पाठ र क्विजसहितको पाठ्यक्रम।</p>
   </div>
 
   <?php if ($allCourses === []): ?>
