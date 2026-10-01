@@ -10,9 +10,8 @@ $base      = base_path();
 
 $flash = take_flash();
 
-$requestPath = (string) (parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH) ?? '/');
-$isHome      = (bool) preg_match('#/(index\.php)?$#', $requestPath);
 $currentFile = basename((string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+$isHome      = $currentFile === 'learn.php';
 $currentCat  = (string) ($_GET['category'] ?? '');
 $currentSlug = (string) ($_GET['slug'] ?? '');
 
@@ -27,7 +26,7 @@ if ($currentCat === '' && $currentSlug !== '') {
 $section = '';
 if ($isHome) {
     $section = 'home';
-} elseif (in_array($currentFile, ['guide.php', 'learn.php', 'quiz.php'], true)) {
+} elseif (in_array($currentFile, ['guide.php', 'quiz.php'], true)) {
     $section = 'learn';
 } elseif ($currentFile === 'combo.php') {
     $section = 'combination';
@@ -97,7 +96,7 @@ $topicNavCats = fetch_all(
 <header class="site-header">
   <div class="container header-inner">
 
-    <a class="brand" href="<?= e($base) ?>index.php">
+    <a class="brand" href="<?= e($base) ?>views/learn.php">
       <span class="brand-logo brand-emblem">
         <img src="<?= e($base) ?>public/img/ganesh.png" width="26" height="26" alt="">
       </span>
@@ -127,7 +126,7 @@ $topicNavCats = fetch_all(
 
       <div class="nav-item">
         <a class="nav-link<?= $section === 'home' ? ' active' : '' ?>"
-           href="<?= e($base) ?>index.php"<?= $section === 'home' ? ' aria-current="page"' : '' ?>>
+           href="<?= e($base) ?>views/learn.php"<?= $section === 'home' ? ' aria-current="page"' : '' ?>>
           <?= e(bilingual_value('गृह', 'Home')) ?>
         </a>
       </div>

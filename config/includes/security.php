@@ -109,7 +109,7 @@ function log_activity(int $userId, string $action, ?string $entity = null, ?int 
     );
 }
 
-function redirect_back(string $fallback = 'index.php'): never
+function redirect_back(string $fallback = 'views/learn.php'): never
 {
     $referer = $_SERVER['HTTP_REFERER'] ?? '';
     $host    = $_SERVER['HTTP_HOST'] ?? '';

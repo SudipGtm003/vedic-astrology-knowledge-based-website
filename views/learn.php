@@ -27,11 +27,6 @@ if (is_post()) {
             redirect($base . 'views/learn.php');
         }
 
-        if (!is_enrolled((int) current_user_id(), (int) $course['id'])) {
-            flash('warning', 'पहिले पाठ्यक्रममा दर्ता हुनुहोस्।');
-            redirect($base . 'views/learn.php?course=' . $course['slug']);
-        }
-
         execute(
             'INSERT INTO lesson_progress (user_id, lesson_id, is_completed, completed_at)
              VALUES (:u, :l, 1, NOW())
@@ -60,10 +55,10 @@ $lessons    = [];
 $lesson     = null;
 
 if ($course !== null) {
-    // लगइन भएकालाई कोर्स खोल्दै नै स्वतः भर्ना (सबै कोर्स मुफ्त)
+    // लगइन भएकालाई कोर्स खोल्दै नै स्वतः भर्ना — प्रगति ट्र्याक गर्न
     if ($userId !== null && !is_enrolled($userId, (int) $course['id'])) {
         enroll_user($userId, (int) $course['id']);
-        log_activity($userId, 'enroll_free', 'courses', (int) $course['id']);
+        log_activity($userId, 'enroll', 'courses', (int) $course['id']);
     }
 
     $enrolled = $userId !== null && is_enrolled($userId, (int) $course['id']);
@@ -101,13 +96,6 @@ if ($mode === 'lesson' && $lesson === null) {
 }
 
 if ($mode === 'lesson') {
-    require_login();
-
-    if (!$enrolled) {
-        flash('warning', 'यो पाठ पढ्न पहिले पाठ्यक्रममा दर्ता हुनुपर्छ।');
-        redirect($base . 'views/learn.php?course=' . $course['slug']);
-    }
-
     $pageTitle = bilingual_value($lesson['title_np'], $lesson['title_en']);
 } elseif ($mode === 'course') {
     $pageTitle = bilingual_value($course['title_np'], $course['title_en']);
@@ -145,7 +133,7 @@ require __DIR__ . '/../config/includes/header.php';
 
   <div class="grid grid-4">
     <?php foreach ($learnCards as $card): ?>
-      <a class="card card-link" href="?course=jyotish-siknuhos<?= is_logged_in() ? '&lesson=' . e($card[3]) : '' ?>">
+      <a class="card card-link" href="?course=jyotish-siknuhos&lesson=<?= e($card[3]) ?>">
         <div class="card-emoji"><?= e($card[0]) ?></div>
         <div class="card-title"><?= e($card[1]) ?></div>
         <p class="muted"><?= e($card[2]) ?></p>
@@ -169,13 +157,10 @@ require __DIR__ . '/../config/includes/header.php';
         $cStats    = $cEnrolled ? course_stats((int) $c['id'], (int) $userId) : null;
       ?>
       <a class="card card-link" href="?course=<?= e($c['slug']) ?>">
-        <div class="card-sanskrit">मुफ्त</div>
         <div class="card-title"><?= e(bilingual_value($c['title_np'], $c['title_en'])) ?></div>
         <p class="muted"><?= e(bilingual_value($c['description'], null)) ?></p>
         <?php if ($cStats !== null): ?>
           <div class="muted"><?= (int) $cStats['done'] ?>/<?= (int) $cStats['total'] ?> पाठ पूरा — <?= (int) $cStats['percent'] ?>%</div>
-        <?php else: ?>
-          <div class="muted">प्रवेश गर्नुहोस् →</div>
         <?php endif; ?>
       </a>
     <?php endforeach; ?>
@@ -217,7 +202,7 @@ require __DIR__ . '/../config/includes/header.php';
           <?= e(bilingual_value($course['title_np'], $course['title_en'])) ?>
         </div>
         <h1><?= e(bilingual_value($course['title_np'], $course['title_en'])) ?></h1>
-        <p class="muted">मुफ्त पाठ्यक्रम · <?= count($lessons) ?> पाठ</p>
+        <p class="muted"><?= count($lessons) ?> पाठ</p>
       </div>
 
       <?php if (trim((string) $course['description'])): ?>
@@ -226,32 +211,15 @@ require __DIR__ . '/../config/includes/header.php';
         </div>
       <?php endif; ?>
 
-      <?php if (!$enrolled): ?>
-        <div class="card" style="margin-bottom:1rem">
-          <h2>प्रवेश</h2>
-          <p class="muted">पाठहरू पढ्न र क्विज दिन पहिले दर्ता हुनुपर्छ।</p>
-          <a class="btn btn-primary" href="<?= e($base) ?>login.php">लगइन गर्नुहोस्</a>
-          <a class="btn btn-ghost" href="<?= e($base) ?>register.php">दर्ता गर्नुहोस्</a>
-        </div>
-      <?php endif; ?>
-
       <div class="card">
         <h2>पाठहरू</h2>
         <div class="grid grid-2">
           <?php foreach ($lessons as $i => $l): ?>
-            <?php if ($enrolled): ?>
-              <a class="card card-link" href="?course=<?= e($course['slug']) ?>&lesson=<?= e($l['slug']) ?>">
-                <div class="card-index"><?= $i + 1 ?></div>
-                <div class="card-title" style="font-size:1rem"><?= e(bilingual_value($l['title_np'], $l['title_en'])) ?></div>
-                <?php if (!empty($l['is_completed'])): ?><span class="badge badge-on">पूरा भयो</span><?php endif; ?>
-              </a>
-            <?php else: ?>
-              <div class="card">
-                <div class="card-index"><?= $i + 1 ?></div>
-                <div class="card-title" style="font-size:1rem"><?= e(bilingual_value($l['title_np'], $l['title_en'])) ?></div>
-                <span class="badge badge-off">ताला</span>
-              </div>
-            <?php endif; ?>
+            <a class="card card-link" href="?course=<?= e($course['slug']) ?>&lesson=<?= e($l['slug']) ?>">
+              <div class="card-index"><?= $i + 1 ?></div>
+              <div class="card-title" style="font-size:1rem"><?= e(bilingual_value($l['title_np'], $l['title_en'])) ?></div>
+              <?php if (!empty($l['is_completed'])): ?><span class="badge badge-on">पूरा भयो</span><?php endif; ?>
+            </a>
           <?php endforeach; ?>
         </div>
       </div>
@@ -283,7 +251,7 @@ require __DIR__ . '/../config/includes/header.php';
 
       <div class="card" style="margin-bottom:1rem">
         <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
-          <?php if (!$isDone): ?>
+          <?php if ($userId !== null && !$isDone): ?>
             <form method="post" action="">
               <?= csrf_field() ?>
               <input type="hidden" name="action" value="complete">
@@ -291,7 +259,7 @@ require __DIR__ . '/../config/includes/header.php';
               <input type="hidden" name="lesson_id" value="<?= (int) $lesson['id'] ?>">
               <button type="submit" class="btn btn-primary">पाठ पूरा भयो भन्नुहोस्</button>
             </form>
-          <?php else: ?>
+          <?php elseif ($isDone): ?>
             <span class="badge badge-on">यो पाठ पूरा भयो</span>
           <?php endif; ?>
 

@@ -40,7 +40,7 @@ function topic_gallery(string $catCode, string $slug): array
 }
 
 if ($slug === '' && $code === '') {
-    redirect('../index.php');
+    redirect('learn.php');
 }
 
 $sidebarRows = fetch_all(
@@ -90,7 +90,7 @@ if ($mode === 'listing') {
         require __DIR__ . '/../config/includes/header.php';
         echo '<div class="page-head"><h1>४०४ — श्रेणी फेला परेन</h1>
               <p class="muted">तपाईंले खोजेको श्रेणी हाम्रो डाटाबेसमा छैन।</p>
-              <p><a class="btn btn-primary" href="../index.php">गृह पृष्ठमा फर्कनुहोस्</a></p></div>';
+              <p><a class="btn btn-primary" href="learn.php">गृह पृष्ठमा फर्कनुहोस्</a></p></div>';
         require __DIR__ . '/../config/includes/footer.php';
         exit;
     }
@@ -123,7 +123,7 @@ if ($mode === 'listing') {
         require __DIR__ . '/../config/includes/header.php';
         echo '<div class="page-head"><h1>४०४ — विषय फेला परेन</h1>
               <p class="muted">तपाईंले खोजेको विषय हाम्रो डाटाबेसमा छैन।</p>
-              <p><a class="btn btn-primary" href="../index.php">गृह पृष्ठमा फर्कनुहोस्</a></p></div>';
+              <p><a class="btn btn-primary" href="learn.php">गृह पृष्ठमा फर्कनुहोस्</a></p></div>';
         require __DIR__ . '/../config/includes/footer.php';
         exit;
     }
@@ -210,7 +210,7 @@ require __DIR__ . '/../config/includes/header.php';
     <?php if ($mode === 'listing'): ?>
       <div class="page-head">
         <div class="breadcrumb">
-          <a href="../index.php">गृह</a> / <?= e($category['name_np']) ?>
+          <a href="learn.php">गृह</a> / <?= e($category['name_np']) ?>
         </div>
         <h1><?= e($category['name_np']) ?></h1>
         <p class="muted">
@@ -248,7 +248,7 @@ require __DIR__ . '/../config/includes/header.php';
                alt="" width="72" height="72">
         <?php endif; ?>
         <div class="breadcrumb">
-          <a href="../index.php">गृह</a> /
+          <a href="learn.php">गृह</a> /
           <a href="?category=<?= e($topic['cat_code']) ?>"><?= e($topic['cat_np']) ?></a> /
           <?= e($topic['name_np']) ?>
         </div>

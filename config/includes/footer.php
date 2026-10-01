@@ -40,8 +40,8 @@ $footerLearn = [
 <main class="container page-body">
   <p class="muted">
     <?= e(bilingual_value(
-        'यो फुटरको मात्र पूर्वावलोकन हो — मुख्य साइट index.php बाट खोल्नुहोस्।',
-        'This is a footer-only preview — open the main site from index.php.'
+        'यो फुटरको मात्र पूर्वावलोकन हो — मुख्य साइट views/learn.php बाट खोल्नुहोस्।',
+        'This is a footer-only preview — open the main site from views/learn.php.'
     )) ?>
   </p>
 </main>
@@ -55,7 +55,7 @@ $footerLearn = [
   <div class="container footer-grid">
 
     <div class="footer-brand">
-      <a class="footer-identity" href="<?= e($base) ?>index.php">
+      <a class="footer-identity" href="<?= e($base) ?>views/learn.php">
         <img class="footer-logo" src="<?= e($base) ?>public/img/ganesh.png" width="44" height="44" alt="">
         <span class="footer-identity-text">
           <strong><?= e(SITE_NAME) ?></strong>

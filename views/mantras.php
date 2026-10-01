@@ -105,7 +105,7 @@ require __DIR__ . '/../config/includes/header.php';
 <div class="page-head has-artwork">
   <img class="page-head-artwork" src="<?= e($base) ?>public/img/om.png" alt="ॐ" width="88" height="88">
   <div class="breadcrumb">
-    <a href="<?= e($base) ?>index.php"><?= e(bilingual_value('गृह', 'Home')) ?></a> /
+    <a href="<?= e($base) ?>views/learn.php"><?= e(bilingual_value('गृह', 'Home')) ?></a> /
     <?= e(bilingual_value('मन्त्र', 'Mantras')) ?>
     <?php if ($slug !== '' && $detail !== null): ?>
       / <a href="<?= e($base) ?>views/mantras.php?cat=<?= e((string) $detail['cat_code']) ?>"><?= e($catMeta[(string) $detail['cat_code']]['np']) ?></a> /

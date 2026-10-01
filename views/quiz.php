@@ -22,13 +22,6 @@ if ($course === null) {
     exit;
 }
 
-require_login();
-
-if (!is_enrolled((int) current_user_id(), (int) $course['id'])) {
-    flash('warning', 'क्विज दिन पहिले पाठ्यक्रममा दर्ता हुनुपर्छ।');
-    redirect($base . 'views/learn.php?course=' . $course['slug']);
-}
-
 $lesson = lesson_by_slug((int) $course['id'], $lessonSlug);
 $quiz   = $lesson !== null
     ? fetch_one('SELECT * FROM quizzes WHERE lesson_id = :l', [':l' => (int) $lesson['id']])
@@ -54,25 +47,28 @@ if (is_post()) {
 
     if (in_array($selected, ['a', 'b', 'c', 'd'], true)) {
         $isCorrect = $selected === (string) $quiz['correct_option'];
+        $uid       = current_user_id();
 
-        execute(
-            'INSERT INTO quiz_attempts (user_id, quiz_id, selected_option, is_correct)
-             VALUES (:u, :q, :s, :c)',
-            [
-                ':u' => (int) current_user_id(),
-                ':q' => (int) $quiz['id'],
-                ':s' => $selected,
-                ':c' => $isCorrect ? 1 : 0,
-            ]
-        );
+        if ($uid !== null) {
+            execute(
+                'INSERT INTO quiz_attempts (user_id, quiz_id, selected_option, is_correct)
+                 VALUES (:u, :q, :s, :c)',
+                [
+                    ':u' => $uid,
+                    ':q' => (int) $quiz['id'],
+                    ':s' => $selected,
+                    ':c' => $isCorrect ? 1 : 0,
+                ]
+            );
 
-        log_activity((int) current_user_id(), 'quiz_attempt', 'quizzes', (int) $quiz['id']);
+            log_activity($uid, 'quiz_attempt', 'quizzes', (int) $quiz['id']);
+        }
 
         $attempt = ['selected' => $selected, 'is_correct' => $isCorrect];
     }
 }
 
-$lessons = course_lessons((int) $course['id'], (int) current_user_id());
+$lessons = course_lessons((int) $course['id'], current_user_id());
 $next    = next_lesson($lessons, (int) $lesson['id']);
 
 $pageTitle = bilingual_value($quiz['question_np'], $quiz['question_en']);

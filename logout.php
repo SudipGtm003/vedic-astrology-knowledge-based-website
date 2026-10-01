@@ -12,4 +12,4 @@ if (is_post()) {
 }
 
 attempt_logout();
-redirect('index.php');
+redirect('views/learn.php');
