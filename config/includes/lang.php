@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 function current_lang(): string
 {
-    // साइट अहिले नेपाली मात्र
+    
     return 'np';
 }
 
