@@ -55,7 +55,7 @@ function lesson_body(string $text): string
         if ($groups === [] || $groups[count($groups) - 1]['type'] !== $type) {
             $groups[] = ['type' => $type, 'lines' => []];
         }
-        $groups[count($groups) - 1]['lines'][] = $type === 'bullet' ? substr($line, 2) : $line;
+        $groups[count($groups) - 1]['lines'][] = $type === 'bullet' ? substr($line, strlen('• ')) : $line;
     }
 
     $html = '';
