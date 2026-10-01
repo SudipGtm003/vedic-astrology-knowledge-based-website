@@ -982,7 +982,7 @@ ul.plain li::before {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--ink);
 }
 ul.plain li:last-child { border-bottom: 0; }
 
