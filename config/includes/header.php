@@ -89,7 +89,7 @@ $topicNavCats = fetch_all(
 <title><?= e($pageTitle) ?> — <?= e(SITE_NAME) ?></title>
 <meta name="description" content="<?= e(SITE_TAGLINE) ?>">
 <link rel="icon" type="image/png" href="<?= e($base) ?>public/img/om.png">
-<link rel="stylesheet" href="<?= e($base) ?>public/css/style.css?v=<?= e((string) @filemtime(__DIR__ . '/../public/css/style.css')) ?>">
+<link rel="stylesheet" href="<?= e($base) ?>public/css/style.css?v=<?= e((string) @filemtime(__DIR__ . '/../../public/css/style.css')) ?>">
 </head>
 <body data-lang="<?= e(current_lang()) ?>">
 

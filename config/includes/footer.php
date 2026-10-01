@@ -34,7 +34,7 @@ $footerLearn = [
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= e(bilingual_value('फुटर पूर्वावलोकन', 'Footer preview')) ?> — <?= e(SITE_NAME) ?></title>
-<link rel="stylesheet" href="<?= e($base) ?>public/css/style.css?v=<?= e((string) @filemtime(__DIR__ . '/../public/css/style.css')) ?>">
+<link rel="stylesheet" href="<?= e($base) ?>public/css/style.css?v=<?= e((string) @filemtime(__DIR__ . '/../../public/css/style.css')) ?>">
 </head>
 <body data-lang="<?= e(current_lang()) ?>">
 <main class="container page-body">
@@ -126,6 +126,6 @@ $footerLearn = [
   </svg>
 </button>
 
-<script src="<?= e($base) ?>public/js/main.js?v=<?= e((string) @filemtime(__DIR__ . '/../public/js/main.js')) ?>"></script>
+<script src="<?= e($base) ?>public/js/main.js?v=<?= e((string) @filemtime(__DIR__ . '/../../public/js/main.js')) ?>"></script>
 </body>
 </html>
