@@ -1024,6 +1024,7 @@ ul.plain li:last-child { border-bottom: 0; }
 
 .site-footer {
   position: relative;
+  z-index: 35;
   overflow: hidden;
   margin-top: 3.5rem;
   color: #ece0dc;
