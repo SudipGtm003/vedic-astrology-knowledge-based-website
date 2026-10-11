@@ -40,6 +40,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  padding-top: 101px; /* fixed header को ठाउँ — मुख्य content नलुकाउन */
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui);
@@ -82,8 +83,10 @@ html { scroll-padding-top: 118px; }
 .muted { color: var(--ink-faint); font-size: .875rem; }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 40;
   background: var(--card);
   border-bottom: 1px solid var(--line);
@@ -1509,7 +1512,7 @@ ul.plain li:last-child { border-bottom: 0; }
 
 @media print {
   .site-header, .site-footer, .back-to-top, .no-print { display: none !important; }
-  body { background: #fff; }
+  body { background: #fff; padding-top: 0; }
   .page-body { padding: 0; }
   @page { size: A4 landscape; margin: 15mm; }
 }
