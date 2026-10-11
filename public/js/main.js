@@ -36,7 +36,6 @@ const VAL = (() => {
     const chipsList = document.getElementById('chips-list');
     const quickList = document.getElementById('chips-quick');
 
-    // ग्रह नामहरू (DB बाट आएका रोहरूबाट) र क्रम
     const GRAHAS = {};
     const order = [];
     rowsBox.querySelectorAll('.multi-row').forEach((row) => {
@@ -44,10 +43,10 @@ const VAL = (() => {
       order.push(row.dataset.id);
     });
 
-    // अवस्था: सुरुमा सूर्य चयनित र फोकस सूर्य
     let selected = [{ id: '1', retro: false }];
     let focus = '1';
 
+    // राहु(8) / केतु(9) सधैँ वक्री
     const isAutoRetro = (id) => id === '8' || id === '9';
     const entryOf = (id) => selected.find((item) => item.id === id) || null;
 
@@ -62,7 +61,6 @@ const VAL = (() => {
         .join(', ');
     }
 
-    // बहु-ग्रहमा श्लोक ट्याब (कुन ग्रहको पढ्ने छान्ने)
     function multiTabs() {
       if (selected.length <= 1) return '';
       return `<div class="shloka-tabs"><span class="stab-label">ग्रह श्लोक छान्नुहोस्:</span>${selected
@@ -135,7 +133,6 @@ const VAL = (() => {
       if (!panel.hidden && !dropdown.contains(event.target)) openPanel(false);
     });
 
-    // ड्रपडाउन रोहरू: चयन टगल / वक्री-मार्गी टगल
     rowsBox.addEventListener('click', (event) => {
       const row = event.target.closest('.multi-row');
       if (!row) return;
@@ -152,7 +149,6 @@ const VAL = (() => {
       toggle(row.dataset.id);
     });
 
-    // चिपहरू: हटाउने (×) र थप्ने (+ नाम)
     chipsRow.addEventListener('click', (event) => {
       const remove = event.target.closest('[data-remove]');
       if (remove) {
@@ -288,7 +284,6 @@ const VAL = (() => {
       fetchReading();
     });
 
-    // श्लोक ट्याब: फोकस ग्रह बदलेर फेरि पढ्ने
     result.addEventListener('click', (event) => {
       const tab = event.target.closest('.stab');
       if (!tab) return;

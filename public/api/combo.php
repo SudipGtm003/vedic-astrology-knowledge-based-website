@@ -186,7 +186,6 @@ switch ($targetType) {
         break;
 }
 
-// संयोजन (भाव + राशि + ग्रह) — विश्लेषण combo_data.php बाट (हाम्रो आफ्नो UI/UX)
 if ($targetType === 'bhava_rashi') {
     require_once __DIR__ . '/../../config/includes/combo_data.php';
 

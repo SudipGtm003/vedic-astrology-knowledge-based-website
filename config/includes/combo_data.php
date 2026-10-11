@@ -3,15 +3,8 @@
 declare(strict_types=1);
 
 /**
- * संयोजन विश्लेषणको विश्लेषण प्रणाली।
- * सबै data combo_* tables मा छ (स्रोत: vedicastrologylearn.ai.studio); UI/UX हाम्रो आफ्नो।
- *
- * आवश्यक tables: combo_bhavas, combo_rashis, combo_grahas, combo_graha_fal,
- * combo_bhavesh_fal, combo_relations, combo_group_texts, combo_texts।
- * config/db.php पछि मात्र include गर्नुहोस्।
+ * संयोजन विश्लेषण — config/db.php पछि मात्र include गर्नुहोस्।
  */
-
-/** combo_texts बाट एउटा text/template लिने। */
 function combo_text(string $key): string
 {
     static $cache = [];
@@ -37,7 +30,6 @@ function combo_fill(string $template, array $vars): string
     return strtr($template, $map);
 }
 
-/** ग्रह र राशि बीचको सम्बन्ध (combo_relations बाट)। */
 function combo_relationship(int $grahaId, int $rashiId): array
 {
     $row = fetch_one(
@@ -53,7 +45,6 @@ function combo_relationship(int $grahaId, int $rashiId): array
     return ['rel' => 'समगृही (Neutral Sign)', 'strength' => 'सामान्य (Neutral - 55%)'];
 }
 
-/** ग्रहको फल सूची (positive / negative / remedy)। */
 function combo_fal(int $grahaId, string $kind): array
 {
     $rows = fetch_all(
@@ -68,8 +59,6 @@ function combo_fal(int $grahaId, string $kind): array
 
 /**
  * भाव + राशि + ग्रहको संयोजन विश्लेषण।
- * फर्कने array: shloka, shloka_translation, analysis, positive_effects,
- * negative_effects, remedies, relationship, strength, bhavesh, source।
  */
 function combo_analysis(int $bhavaId, int $rashiId, int $grahaId, bool $retrograde): array
 {

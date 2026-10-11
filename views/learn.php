@@ -6,7 +6,6 @@ require_once __DIR__ . '/../config/includes/auth.php';
 require_once __DIR__ . '/../config/includes/lang.php';
 require_once __DIR__ . '/../config/includes/course.php';
 
-// पाठको पाठ्य-सामग्री: तालिका, सूची, शीर्षक र साधारण प्याराग्राफ छुट्याएर देखाउँछ।
 function lesson_links(string $escaped): string
 {
     return preg_replace('/\[([^\]]+)\]\(([^()\s]+)\)/', '<a href="$2">$1</a>', $escaped) ?? $escaped;

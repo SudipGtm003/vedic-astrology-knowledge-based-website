@@ -9,7 +9,6 @@ if (is_logged_in()) {
     redirect(home_link_for_role());
 }
 
-// GET मा फेरि सुरु गर्ने
 if (!is_post()) {
     unset($_SESSION['reset_user_id'], $_SESSION['reset_email']);
 }
@@ -23,7 +22,6 @@ if (is_post()) {
 
     $step = post('step');
 
-    // चरण १ : इमेल मागेर OTP पठाउने
     if ($step === 'send') {
         unset($_SESSION['reset_user_id'], $_SESSION['reset_email']);
 
@@ -55,7 +53,6 @@ if (is_post()) {
         }
     }
 
-    // चरण २ : OTP जाँचेर नयाँ पासवर्ड राख्ने
     if ($step === 'reset') {
         $userId  = $_SESSION['reset_user_id'] ?? null;
         $otp     = post('otp');

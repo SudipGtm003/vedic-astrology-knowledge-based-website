@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-// ===== Gmail SMTP कन्फिग =====
 const SMTP_HOST = 'smtp.gmail.com';
 const SMTP_PORT = 465;
-const SMTP_USER = 'sudipgautam210@gmail.com'; // आफ्नो Gmail ठेगाना
+const SMTP_USER = 'sudipgautam210@gmail.com';
 const SMTP_PASS = 'abtpquccwwuwvbig'; // Gmail App Password (१६ अक्षर, space बिना)
 
 require_once __DIR__ . '/../../lib/phpmailer/src/Exception.php';
@@ -14,7 +13,6 @@ require_once __DIR__ . '/../../lib/phpmailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-/** OTP इमेल पठाउँछ — सफल भए true, नत्रे false */
 function send_otp_email(string $to, string $otp): bool
 {
     if (SMTP_USER === '' || SMTP_PASS === '') {
