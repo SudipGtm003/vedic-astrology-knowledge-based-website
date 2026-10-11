@@ -9,7 +9,8 @@ if ($standalone) {
 
 $base = $base ?? base_path();
 
-$hideFooter = !empty($hideFooter);
+// फुटर सिर्फ home page (views/learn.php) मा मात्र देखाउने
+$hideFooter = !empty($hideFooter) || (!$standalone && basename($_SERVER['PHP_SELF'] ?? '') !== 'learn.php');
 
 $footerTopics = [
     ['bhava', 'भाव', 'Bhava'],

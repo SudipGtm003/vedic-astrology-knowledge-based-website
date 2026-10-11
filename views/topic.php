@@ -155,8 +155,6 @@ if ($mode === 'listing') {
     $pageTitle = bilingual_value($row['name_np'], $row['name_en']);
 }
 
-$hideFooter = $mode === 'detail' && $topicQuiz !== null;
-
 $activeTopicId = $topic !== null ? (int) $topic['id'] : 0;
 $activeCatCode = $mode === 'listing' ? $pageCode : (string) ($topic['cat_code'] ?? '');
 
