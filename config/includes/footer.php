@@ -79,7 +79,7 @@ $footerLearn = [
     </div>
 
     <nav class="footer-col" aria-labelledby="footer-topics">
-      <h4 id="footer-topics"><?= e(bilingual_value('विषयहरू', 'Topics')) ?></h4>
+      <h2 id="footer-topics"><?= e(bilingual_value('विषयहरू', 'Topics')) ?></h2>
       <ul>
         <?php foreach ($footerTopics as [$footCode, $np, $en]): ?>
           <li>
@@ -92,7 +92,7 @@ $footerLearn = [
     </nav>
 
     <nav class="footer-col" aria-labelledby="footer-learn">
-      <h4 id="footer-learn"><?= e(bilingual_value('सिकाइ र स्रोत', 'Learn & Resources')) ?></h4>
+      <h2 id="footer-learn"><?= e(bilingual_value('सिकाइ र स्रोत', 'Learn & Resources')) ?></h2>
       <ul>
         <?php foreach ($footerLearn as [$href, $np, $en]): ?>
           <li>

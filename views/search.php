@@ -24,7 +24,7 @@ require __DIR__ . '/../config/includes/header.php';
 </div>
 
 <form class="search-form" method="get" action="<?= e($base) ?>views/search.php" style="max-width:520px; margin-bottom:1.5rem">
-  <input type="search" name="q" value="<?= e($query) ?>" placeholder="खोज शब्द लेख्नुहोस्…" autofocus>
+  <input type="search" name="q" value="<?= e($query) ?>" placeholder="खोज शब्द लेख्नुहोस्…" aria-label="खोज शब्द" autofocus>
   <button type="submit">खोज्नु</button>
 </form>
 

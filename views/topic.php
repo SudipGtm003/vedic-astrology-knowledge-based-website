@@ -165,7 +165,7 @@ require __DIR__ . '/../config/includes/header.php';
 
 <div class="layout">
   <aside class="sidebar sidebar-scroll-wrap">
-    <h4>विषय सूची</h4>
+    <h2>विषय सूची</h2>
 
     <form class="search-form" style="margin-bottom:.75rem" onsubmit="return false">
       <input type="search" id="sidebar-filter" placeholder="फिल्टर…" aria-label="Filter topics">

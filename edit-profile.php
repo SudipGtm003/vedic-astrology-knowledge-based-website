@@ -121,13 +121,13 @@ require __DIR__ . '/config/includes/header.php';
       <?= csrf_field() ?>
 
       <label for="name">पूरा नाम</label>
-      <input type="text" id="name" name="name" value="<?= e($name) ?>" required minlength="3">
+      <input type="text" id="name" name="name" value="<?= e($name) ?>" autocomplete="name" required minlength="3">
 
       <label for="email">इमेल ठेगाना</label>
-      <input type="email" id="email" name="email" value="<?= e($email) ?>" required>
+      <input type="email" id="email" name="email" value="<?= e($email) ?>" autocomplete="email" required>
 
       <label for="phone_np">मोबाइल नम्बर <span class="muted">(ऐच्छिक)</span></label>
-      <input type="tel" id="phone_np" name="phone_np" value="<?= e($phone) ?>" placeholder="98XXXXXXXX" pattern="9[6-9][0-9]{8}">
+      <input type="tel" id="phone_np" name="phone_np" value="<?= e($phone) ?>" placeholder="98XXXXXXXX" autocomplete="tel" pattern="9[6-9][0-9]{8}">
 
       <h3 style="margin-top:1.25rem">पासवर्ड परिवर्तन <span class="muted">(ऐच्छिक)</span></h3>
 

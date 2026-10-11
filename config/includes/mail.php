@@ -43,35 +43,14 @@ function send_otp_email(string $to, string $otp): bool
             . "यो इमेल तपाईंले अनुरोध नगरेको हो भने बेवास्ता गर्नुहोस्।";
 
         $mail->Body = <<<HTML
-<div style="margin:0;padding:0;background-color:#f7efdd;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f7efdd;">
-    <tr>
-      <td align="center" style="padding:36px 14px;">
-        <table role="presentation" width="520" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:520px;background-color:#ffffff;border:1px solid #e2c88b;border-radius:12px;overflow:hidden;">
-          <tr>
-            <td style="background-color:#252525;padding:22px 34px;">
-              <p style="margin:0;font-size:19px;color:#c89b3c;letter-spacing:1px;">&#9737; वैदिक ज्योतिष सिकाइ</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:34px 34px 8px;">
-              <h1 style="margin:0 0 12px;font-size:23px;color:#252525;">पासवर्ड रिसेट OTP</h1>
-              <p style="margin:0 0 26px;font-size:15px;line-height:1.7;color:#666666;">नमस्ते! उहाँको खाताको पासवर्ड रिसेट गर्न तल दिइएको ६ अंकको OTP प्रयोग गर्नुहोस्।</p>
-              <div style="background-color:#f7efdd;border:1px dashed #c89b3c;border-radius:8px;text-align:center;padding:22px 10px;">
-                <span style="font-family:monospace,'Courier New',sans-serif;font-size:36px;font-weight:bold;letter-spacing:10px;color:#8a6a21;">{$otp}</span>
-              </div>
-              <p style="margin:24px 0 0;font-size:14px;color:#666666;">यो OTP <b style="color:#252525;">१० मिनेट</b> भित्र मात्र मान्य छ र एक पटक मात्र प्रयोग हुन्छ।</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:20px 34px 30px;">
-              <p style="margin:0;font-size:12.5px;line-height:1.7;color:#8d8a84;border-top:1px solid #f0e6d2;padding-top:18px;">यो इमेल तपाईंले अनुरोध नगरेको हो भने बेवास्ता गर्नुहोस्।<br>— वैदिक ज्योतिष सिकाइ</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+<div style="font-family:Arial,'Helvetica Neue',sans-serif;max-width:520px;margin:0 auto;padding:28px 16px;color:#222222;">
+  <p style="margin:0;font-size:15px;font-weight:bold;color:#222222;">वैदिक ज्योतिष सिकाइ</p>
+  <hr style="border:0;border-top:1px solid #dddddd;margin:12px 0 22px;">
+  <h1 style="margin:0 0 12px;font-size:20px;font-weight:bold;color:#222222;">पासवर्ड रिसेट OTP</h1>
+  <p style="margin:0 0 20px;font-size:15px;line-height:1.7;color:#444444;">नमस्ते! उहाँको खाताको पासवर्ड रिसेट गर्न तल दिइएको ६ अंकको OTP प्रयोग गर्नुहोस्।</p>
+  <p style="margin:0 0 20px;padding:14px;text-align:center;background-color:#f5f5f5;border:1px solid #dddddd;font-family:monospace,'Courier New',sans-serif;font-size:28px;font-weight:bold;letter-spacing:8px;color:#222222;">{$otp}</p>
+  <p style="margin:0 0 20px;font-size:14px;line-height:1.7;color:#555555;">यो OTP <b style="color:#222222;">१० मिनेट</b> भित्र मात्र मान्य छ र एक पटक मात्र प्रयोग हुन्छ।</p>
+  <p style="margin:0;font-size:13px;line-height:1.7;color:#888888;">यो इमेल तपाईंले अनुरोध नगरेको हो भने बेवास्ता गर्नुहोस्।<br>— वैदिक ज्योतिष सिकाइ</p>
 </div>
 HTML;
 

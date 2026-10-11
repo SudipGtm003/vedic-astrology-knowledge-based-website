@@ -12,7 +12,7 @@
 
   --ink: #252525;
   --ink-soft: #666666;
-  --ink-faint: #8d8a84;
+  --ink-faint: #6b6862;
   --paper: #f8f6f1;
   --card: #ffffff;
   --line: #e5e1d8;
@@ -109,7 +109,7 @@ html { scroll-padding-top: 118px; }
   min-width: 0; 
 }
 .brand:hover { text-decoration: none; color: var(--ink); }
-.brand-logo { display: block; width: 34px; height: 34px; border-radius: 6px; }
+.brand-logo { display: block; height: 34px; width: auto; border-radius: 6px; }
 
 .nav-om { display: none; }
 @media (min-width: 1121px) {
@@ -523,7 +523,7 @@ html { scroll-padding-top: 118px; }
 .btn-ghost { background: transparent; color: var(--brand); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--brand); color: var(--brand-dark); background: var(--brand-soft); }
 .btn-block { width: 100%; margin-top: 1.25rem; }
-.btn-sm { padding: .28rem .7rem; font-size: .8rem; }
+.btn-sm { padding: .35rem .75rem; font-size: .8rem; }
 
 .search-form { display: flex; gap: .5rem; }
 .search-form input {
@@ -764,7 +764,7 @@ tbody tr:hover { background: var(--accent-soft); }
   border-radius: var(--radius);
   padding: 1rem;
 }
-.sidebar h4 {
+.sidebar h2 {
   border-bottom: 2px solid var(--accent);
   padding-bottom: .5rem;
   margin-bottom: .5rem;
@@ -935,9 +935,26 @@ ul.plain li:last-child { border-bottom: 0; }
 
 .combo-controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
   align-items: end;
+}
+/* फॉर्मका सबै controls एउटै उचाइमा (44px) */
+.combo-controls select {
+  height: 44px;
+  padding: 0 .7rem;
+  font-size: .92rem;
+  font-weight: 600;
+}
+.combo-controls .btn-block {
+  margin-top: 0;
+  height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .92rem;
 }
 .combo-result { margin-top: 1.5rem; padding-bottom: 3.5rem; }
 .combo-result h2 { border-bottom: 2px solid var(--accent); padding-bottom: .5rem; }
@@ -1171,7 +1188,8 @@ ul.plain li:last-child { border-bottom: 0; }
   font-size: .95rem;
   line-height: 1;
   cursor: pointer;
-  padding: 0;
+  padding: .2rem;
+  margin: -.25rem -.3rem -.25rem 0;
 }
 .chip-x:hover { color: #dc2626; }
 .chip-add {
@@ -1316,9 +1334,8 @@ ul.plain li:last-child { border-bottom: 0; }
   text-decoration: none;
 }
 .footer-logo {
-  width: 46px;
   height: 46px;
-  object-fit: contain;
+  width: auto;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .35));
 }
 .footer-identity-text { display: block; line-height: 1.25; }
@@ -1376,7 +1393,7 @@ ul.plain li:last-child { border-bottom: 0; }
 .footer-btn-solid:focus-visible { background: #e0b458; border-color: #e0b458; }
 
 
-.footer-col h4 {
+.footer-col h2 {
   display: flex;
   align-items: center;
   gap: .5rem;
@@ -1388,7 +1405,7 @@ ul.plain li:last-child { border-bottom: 0; }
   text-transform: uppercase;
   color: var(--accent-line);
 }
-.footer-col h4::before {
+.footer-col h2::before {
   content: "";
   width: 18px;
   height: 2px;

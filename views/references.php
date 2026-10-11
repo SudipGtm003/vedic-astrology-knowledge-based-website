@@ -47,7 +47,7 @@ require __DIR__ . '/../config/includes/header.php';
 
 <div class="layout">
   <aside class="sidebar">
-    <h4><?= e(bilingual_value('यस पृष्ठमा', 'On this page')) ?></h4>
+    <h2><?= e(bilingual_value('यस पृष्ठमा', 'On this page')) ?></h2>
     <input id="sidebar-filter" type="search" placeholder="<?= e(bilingual_value('खोज्नुहोस्…', 'Filter…')) ?>"
            aria-label="<?= e(bilingual_value('खोज्नुहोस्', 'Filter')) ?>" style="margin-bottom:.6rem">
     <ul>

@@ -50,20 +50,20 @@ require __DIR__ . '/config/includes/header.php';
       <?= csrf_field() ?>
 
       <label for="name">Full name</label>
-      <input type="text" id="name" name="name" value="<?= e($name) ?>" required minlength="3">
+      <input type="text" id="name" name="name" value="<?= e($name) ?>" autocomplete="name" required minlength="3">
 
       <label for="email">Email address</label>
-      <input type="email" id="email" name="email" value="<?= e($email) ?>" required>
+      <input type="email" id="email" name="email" value="<?= e($email) ?>" autocomplete="email" required>
 
       <label for="phone_np">Mobile number <span class="muted">(optional)</span></label>
-      <input type="tel" id="phone_np" name="phone_np" placeholder="98XXXXXXXX" pattern="9[6-9][0-9]{8}">
+      <input type="tel" id="phone_np" name="phone_np" placeholder="98XXXXXXXX" autocomplete="tel" pattern="9[6-9][0-9]{8}">
 
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" required minlength="8">
+      <input type="password" id="password" name="password" autocomplete="new-password" required minlength="8">
       <small class="muted">At least 8 characters, with letters and numbers.</small>
 
       <label for="password_confirm">Confirm password</label>
-      <input type="password" id="password_confirm" name="password_confirm" required minlength="8">
+      <input type="password" id="password_confirm" name="password_confirm" autocomplete="new-password" required minlength="8">
 
       <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
