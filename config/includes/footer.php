@@ -109,8 +109,8 @@ $footerLearn = [
   <div class="footer-bottom">
     <div class="container footer-bottom-inner">
       <span>
-        &copy; <?= date('Y') ?> <?= e(SITE_NAME) ?> &middot;
-        <?= e(bilingual_value('सबै अधिकार सुरक्षित', 'All rights reserved')) ?>
+        VEDIC ASTROLOGY BASED KNOWLEDGE ALL RIGHTS RESERVE TO
+        <a href="https://sudipgautam.info.np" target="_blank" rel="noopener">sudipgautam.info.np</a>
       </span>
     </div>
   </div>

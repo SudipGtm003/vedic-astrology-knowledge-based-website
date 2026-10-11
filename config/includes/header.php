@@ -97,11 +97,9 @@ $topicNavCats = fetch_all(
   <div class="container header-inner">
 
     <a class="brand" href="<?= e($base) ?>views/learn.php">
-      <span class="brand-logo brand-emblem">
-        <img src="<?= e($base) ?>public/img/ganesh.png" width="26" height="26" alt="">
-      </span>
+      <img class="brand-logo" src="<?= e($base) ?>public/img/ganesh.png" width="34" height="34" alt="">
       <span class="brand-text">
-        <strong><?= e(SITE_NAME) ?></strong>
+        <strong>Vedic Astrology Learn</strong>
         <small>सिकाइ • खोज • बुझाइ</small>
       </span>
     </a>
@@ -204,16 +202,6 @@ $topicNavCats = fetch_all(
     </nav>
 
     <div class="header-actions">
-      <a class="nav-promo" href="<?= e($base) ?>views/mantras.php"
-         title="<?= e(bilingual_value('मन्त्र सुन्नुहोस्', 'Listen to mantras')) ?>">
-        <span class="nav-promo-new">नयाँ</span>
-        <img src="<?= e($base) ?>public/img/om.png" width="24" height="24" alt="">
-        <span class="nav-promo-text">
-          <strong><?= e(bilingual_value('मन्त्र सुन्नुहोस्', 'Listen to Mantras')) ?></strong>
-          <small><?= e(bilingual_value('नयाँ मन्त्रहरू', 'New mantras')) ?></small>
-        </span>
-      </a>
-
       <?php if (is_logged_in()): ?>
         <a class="btn btn-ghost" href="<?= e($base . home_link_for_role()) ?>"><?= e(bilingual_value('मेरो सिकाइ', 'My Learning')) ?></a>
         <a class="btn btn-ghost" href="<?= e($base) ?>profile.php"><?= e(bilingual_value('प्रोफाइल', 'Profile')) ?></a>

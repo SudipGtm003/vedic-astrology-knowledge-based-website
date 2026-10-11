@@ -194,16 +194,16 @@ $allCourses = fetch_all(
 );
 
 $learnCards = [
-    ['📖', 'कुण्डली कसरी पढ्ने', 'सुरुदेखि — आधारभूत प्रक्रिया र क्रम।', 'kundali-kasari-padhne'],
-    ['♈', '१२ राशि', 'प्रत्येकको स्वभाव, स्वामी, र विशेषताहरू।', 'rashi-parichay'],
-    ['⭐', '२७ नक्षत्र', 'चन्द्रको आकाशीय गृह — नाम, स्वामी, विषयवस्तु।', 'nakshatra-parichay'],
-    ['🪐', '९ ग्रह', 'सूर्यदेखि केतुसम्म — मनोविज्ञान र महत्त्व।', 'graha-parichay'],
-    ['🏠', '१२ भाव', 'जीवनका १२ क्षेत्र — कसरी पढ्ने।', 'bhava-parichay'],
-    ['🕉️', 'पञ्चाङ्ग', 'तिथि, नक्षत्र, योग, करण, वार।', 'panchanga-parichay'],
-    ['⏳', 'विंशोत्तरी दशा', '९ ग्रहीय अवधिको १२० वर्षे चक्र।', 'vimshottari-dasha'],
-    ['✨', 'मुख्य योगहरू', 'गजकेसरी, राज, धन, र अरू महत्त्वपूर्ण योग।', 'mukhya-yogaharu'],
-    ['👁️', 'दृष्टि', 'ग्रहहरू अरू भावलाई कसरी हेर्छन्।', 'drishti'],
-    ['🔑', 'विशेष अवधारणा', 'उच्च, नीच, अस्त, वक्री, स्व-राशि — सबै।', 'vishesh-avdharana'],
+    ['कुण्डली कसरी पढ्ने', 'सुरुदेखि — आधारभूत प्रक्रिया र क्रम।', 'kundali-kasari-padhne'],
+    ['१२ राशि', 'प्रत्येकको स्वभाव, स्वामी, र विशेषताहरू।', 'rashi-parichay'],
+    ['२७ नक्षत्र', 'चन्द्रको आकाशीय गृह — नाम, स्वामी, विषयवस्तु।', 'nakshatra-parichay'],
+    ['९ ग्रह', 'सूर्यदेखि केतुसम्म — मनोविज्ञान र महत्त्व।', 'graha-parichay'],
+    ['१२ भाव', 'जीवनका १२ क्षेत्र — कसरी पढ्ने।', 'bhava-parichay'],
+    ['पञ्चाङ्ग', 'तिथि, नक्षत्र, योग, करण, वार।', 'panchanga-parichay'],
+    ['विंशोत्तरी दशा', '९ ग्रहीय अवधिको १२० वर्षे चक्र।', 'vimshottari-dasha'],
+    ['मुख्य योगहरू', 'गजकेसरी, राज, धन, र अरू महत्त्वपूर्ण योग।', 'mukhya-yogaharu'],
+    ['दृष्टि', 'ग्रहहरू अरू भावलाई कसरी हेर्छन्।', 'drishti'],
+    ['विशेष अवधारणा', 'उच्च, नीच, अस्त, वक्री, स्व-राशि — सबै।', 'vishesh-avdharana'],
 ];
 
 require __DIR__ . '/../config/includes/header.php';
@@ -218,10 +218,9 @@ require __DIR__ . '/../config/includes/header.php';
 
   <div class="grid grid-4">
     <?php foreach ($learnCards as $card): ?>
-      <a class="card card-link" href="?course=jyotish-siknuhos&lesson=<?= e($card[3]) ?>">
-        <div class="card-emoji"><?= e($card[0]) ?></div>
-        <div class="card-title"><?= e($card[1]) ?></div>
-        <p class="muted"><?= e($card[2]) ?></p>
+      <a class="card card-link" href="?course=jyotish-siknuhos&lesson=<?= e($card[2]) ?>">
+        <div class="card-title"><?= e($card[0]) ?></div>
+        <p class="muted"><?= e($card[1]) ?></p>
       </a>
     <?php endforeach; ?>
   </div>

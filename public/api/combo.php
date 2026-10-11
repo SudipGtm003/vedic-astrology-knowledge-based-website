@@ -186,6 +186,23 @@ switch ($targetType) {
         break;
 }
 
+// संयोजन (भाव + राशि + ग्रह) — विश्लेषण combo_data.php बाट (हाम्रो आफ्नो UI/UX)
+if ($targetType === 'bhava_rashi') {
+    require_once __DIR__ . '/../../config/includes/combo_data.php';
+
+    $reading = combo_analysis($bhavaId, $rashiId, $grahaId, get('retrograde') === '1');
+
+    echo json_encode([
+        'found'       => true,
+        'title_np'    => $titleNp,
+        'sanskrit_line' => $sanskritLine,
+        'graha_np'    => $graha['name_np'] ?? '',
+        'target_np'   => $targetNp,
+        'reading'     => $reading,
+    ], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    exit;
+}
+
 try {
     $combo = $sql !== '' ? fetch_one($sql, $params) : null;
 } catch (Throwable $e) {

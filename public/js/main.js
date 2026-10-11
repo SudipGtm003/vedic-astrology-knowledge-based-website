@@ -24,7 +24,144 @@ const VAL = (() => {
     const result = document.getElementById('combo-result');
     const bhava = document.getElementById('bhava_id');
     const rashi = document.getElementById('rashi_id');
-    const graha = document.getElementById('graha_id');
+    const dropdown = document.getElementById('graha-dropdown');
+    const multiBtn = document.getElementById('graha-multi-btn');
+    const btnLabel = document.getElementById('graha-btn-label');
+    const countBadge = document.getElementById('graha-count');
+    const panel = document.getElementById('graha-panel');
+    const clearBtn = document.getElementById('graha-clear');
+    const doneBtn = document.getElementById('graha-done');
+    const rowsBox = document.getElementById('graha-list');
+    const chipsRow = document.getElementById('chips-row');
+    const chipsList = document.getElementById('chips-list');
+    const quickList = document.getElementById('chips-quick');
+
+    // ग्रह नामहरू (DB बाट आएका रोहरूबाट) र क्रम
+    const GRAHAS = {};
+    const order = [];
+    rowsBox.querySelectorAll('.multi-row').forEach((row) => {
+      GRAHAS[row.dataset.id] = row.dataset.name;
+      order.push(row.dataset.id);
+    });
+
+    // अवस्था: सुरुमा सूर्य चयनित र फोकस सूर्य
+    let selected = [{ id: '1', retro: false }];
+    let focus = '1';
+
+    const isAutoRetro = (id) => id === '8' || id === '9';
+    const entryOf = (id) => selected.find((item) => item.id === id) || null;
+
+    function btnText() {
+      if (selected.length === 0) return 'रिक्त भाव (कुनै ग्रह छैन)';
+      if (selected.length === 1) {
+        const only = selected[0];
+        return GRAHAS[only.id] + (only.retro ? ' (वक्री)' : '');
+      }
+      return selected
+        .map((item) => GRAHAS[item.id] + (item.retro ? '(व)' : ''))
+        .join(', ');
+    }
+
+    // बहु-ग्रहमा श्लोक ट्याब (कुन ग्रहको पढ्ने छान्ने)
+    function multiTabs() {
+      if (selected.length <= 1) return '';
+      return `<div class="shloka-tabs"><span class="stab-label">ग्रह श्लोक छान्नुहोस्:</span>${selected
+        .map((item) => `<button type="button" class="stab${item.id === focus ? ' on' : ''}" data-gid="${item.id}">${escapeHtml(GRAHAS[item.id] || '')}${item.retro ? '(व)' : ''}</button>`)
+        .join('')}</div>`;
+    }
+
+    function renderChips() {
+      rowsBox.querySelectorAll('.multi-row').forEach((row) => {
+        const id = row.dataset.id;
+        const item = entryOf(id);
+        row.classList.toggle('on', !!item);
+        const retroBtn = row.querySelector('.multi-retro');
+        retroBtn.hidden = !item;
+        retroBtn.textContent = item && item.retro ? 'वक्री (व)' : 'मार्गी';
+        retroBtn.classList.toggle('on', !!(item && item.retro));
+      });
+
+      btnLabel.textContent = btnText();
+      countBadge.hidden = selected.length <= 1;
+      countBadge.textContent = `${selected.length} ग्रह युति`;
+
+      chipsList.innerHTML = selected
+        .map((item) => `
+          <span class="chip">
+            <span class="chip-name">${escapeHtml(GRAHAS[item.id] || '')}</span>
+            ${item.retro ? '<span class="chip-badge">वक्री</span>' : ''}
+            <button type="button" class="chip-x" data-remove="${item.id}" title="हटाउनुहोस्" aria-label="हटाउनुहोस्">×</button>
+          </span>`)
+        .join('');
+
+      // थप्नुहोस् — बाँकीका पहिलो ४ ग्रह
+      quickList.innerHTML = order
+        .filter((id) => !entryOf(id))
+        .slice(0, 4)
+        .map((id) => `<button type="button" class="chip chip-add" data-add="${id}">+ ${escapeHtml(GRAHAS[id] || '')}</button>`)
+        .join('');
+
+      chipsRow.hidden = selected.length === 0;
+    }
+
+    function toggle(id) {
+      const item = entryOf(id);
+      if (item) {
+        selected = selected.filter((x) => x.id !== id);
+        if (focus === id) focus = selected.length ? selected[0].id : null;
+      } else {
+        selected = selected.concat({ id, retro: isAutoRetro(id) });
+        if (!focus) focus = id;
+      }
+      renderChips();
+    }
+
+    function openPanel(open) {
+      panel.hidden = !open;
+      multiBtn.classList.toggle('open', open);
+      multiBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    multiBtn.addEventListener('click', () => openPanel(panel.hidden));
+    doneBtn.addEventListener('click', () => openPanel(false));
+
+    clearBtn.addEventListener('click', () => {
+      selected = [];
+      focus = null;
+      renderChips();
+    });
+
+    document.addEventListener('mousedown', (event) => {
+      if (!panel.hidden && !dropdown.contains(event.target)) openPanel(false);
+    });
+
+    // ड्रपडाउन रोहरू: चयन टगल / वक्री-मार्गी टगल
+    rowsBox.addEventListener('click', (event) => {
+      const row = event.target.closest('.multi-row');
+      if (!row) return;
+
+      if (event.target.closest('.multi-retro')) {
+        const item = entryOf(row.dataset.id);
+        if (item) {
+          item.retro = !item.retro;
+          renderChips();
+        }
+        return;
+      }
+
+      toggle(row.dataset.id);
+    });
+
+    // चिपहरू: हटाउने (×) र थप्ने (+ नाम)
+    chipsRow.addEventListener('click', (event) => {
+      const remove = event.target.closest('[data-remove]');
+      if (remove) {
+        toggle(remove.dataset.remove);
+        return;
+      }
+      const add = event.target.closest('[data-add]');
+      if (add) toggle(add.dataset.add);
+    });
 
     function render(data) {
       if (!data || !data.found) {
@@ -35,53 +172,102 @@ const VAL = (() => {
         return;
       }
 
-      const blocks = [
-        ['सामान्य व्याख्या', data.interpretation_np],
-        ['सकारात्मक प्रभाव', data.positive_effects],
-        ['चुनौतीहरू', data.challenges],
-        ['करियर', data.career_indication],
-        ['वित्त', data.financial_indication],
-        ['सम्बन्ध', data.relationship_indication],
-        ['स्वास्थ्य', data.health_indication],
-        ['आध्यात्मिक पक्ष', data.spiritual_indication],
-        ['पारम्परिक व्याख्या', data.classical_interpretation],
-        ['शास्त्रीय स्रोत', data.sanskrit_reference],
-        ['उपाय', data.remedies]
-      ];
+      const bold = (text) => text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+      const paras = (text) => String(text || '')
+        .split(/\n\s*\n/)
+        .filter((part) => part.trim() !== '')
+        .map((part) => `<p>${bold(escapeHtml(part))}</p>`)
+        .join('');
+
+      const bullets = (items) => (!Array.isArray(items) || items.length === 0
+        ? ''
+        : `<ul class="combo-list">${items
+          .map((item) => `<li>${bold(escapeHtml(item))}</li>`)
+          .join('')}</ul>`);
 
       const title = data.title_np || `${data.graha_np} + ${data.target_np}`;
+      const head = `
+        <h2>${escapeHtml(title)}</h2>
+        <p class="card-sanskrit">${escapeHtml(data.sanskrit_line || '')}</p>`;
+
+      let sections = [];
+      let source = '';
+
+      if (data.reading) {
+        const reading = data.reading;
+        const bhavesh = reading.bhavesh || {};
+
+        sections = [
+          [
+            'शास्त्रीय संस्कृत श्लोक',
+            `${multiTabs()}<p class="combo-shloka">${escapeHtml(reading.shloka || '')}</p>`
+          ],
+          ['नेपाली भावार्थ', paras(reading.shloka_translation)],
+          [
+            'सम्बन्ध र फल बल',
+            `<p><strong>सम्बन्ध:</strong> ${escapeHtml(reading.relationship || '')}</p>`
+            + `<p><strong>फल बल:</strong> ${escapeHtml(reading.strength || '')}</p>`
+          ],
+          ['ज्योतिषीय विश्लेषण', paras(reading.analysis)],
+          [
+            '🔑 भावेश फल (बृहत्पाराशर होराशास्त्र)',
+            `<p class="bhavesh-title">${escapeHtml([bhavesh.label, bhavesh.title].filter(Boolean).join(' — '))}</p>
+             <div class="combo-box bx-amber">
+               <span class="box-tag">📜 बृ.पा.हो.शा. (भावेशफलाध्याय) — श्लोक ${escapeHtml(String(bhavesh.shlokaNo ?? ''))}</span>
+               <p class="box-shloka">${escapeHtml(bhavesh.shloka || '')}</p>
+             </div>
+             <div class="combo-box bx-blue">
+               <span class="box-tag">नेपाली भावार्थ</span>
+               ${paras(bhavesh.meaning)}
+             </div>
+             <div class="combo-box bx-gray">
+               <span class="box-tag">ज्योतिषीय व्याख्या</span>
+               ${paras(bhavesh.commentary)}
+             </div>`,
+            'bhavesh-kicker'
+          ],
+          ['सकारात्मक प्रभाव', bullets(reading.positive_effects)],
+          ['चुनौतीहरू', bullets(reading.negative_effects)],
+          ['उपाय', bullets(reading.remedies)]
+        ];
+
+        source = reading.source
+          ? `<p class="combo-src">स्रोत: ${escapeHtml(reading.source)}</p>`
+          : '';
+      }
 
       const html = `
-        <h2>${escapeHtml(title)}</h2>
-        <p class="card-sanskrit">${escapeHtml(data.sanskrit_line || `${data.graha_sanskrit} in ${data.target_sanskrit}`)}</p>
-        ${blocks
+        ${head}
+        ${sections
           .filter(([, body]) => body && String(body).trim() !== '')
-          .map(([heading, body]) => `
+          .map(([heading, body, cls]) => `
             <div class="combo-section">
-              <h3>${heading}</h3>
-              <p>${escapeHtml(body)}</p>
+              <h3${cls ? ` class="${cls}"` : ''}>${heading}</h3>
+              ${body}
             </div>
           `)
           .join('')}
+        ${source}
       `;
 
       result.innerHTML = html;
     }
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      if (!bhava.value || !rashi.value || !graha.value) {
-        result.innerHTML = '<p class="combo-empty">भाव, राशि र ग्रह चयन गर्नुहोस्।</p>';
+    async function fetchReading() {
+      if (!focus || !bhava.value || !rashi.value) {
+        result.innerHTML = '<p class="combo-empty">भाव, राशि र ग्रह छान्नुहोस्।</p>';
         return;
       }
 
+      const item = entryOf(focus) || { retro: false };
       const params = new URLSearchParams({
         action: 'combination',
         target_type: 'bhava_rashi',
         bhava_id: bhava.value,
         rashi_id: rashi.value,
-        graha_id: graha.value
+        graha_id: focus,
+        retrograde: item.retro ? '1' : '0'
       });
 
       result.classList.add('loading');
@@ -94,7 +280,24 @@ const VAL = (() => {
       } finally {
         result.classList.remove('loading');
       }
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      openPanel(false);
+      fetchReading();
     });
+
+    // श्लोक ट्याब: फोकस ग्रह बदलेर फेरि पढ्ने
+    result.addEventListener('click', (event) => {
+      const tab = event.target.closest('.stab');
+      if (!tab) return;
+      focus = tab.dataset.gid;
+      fetchReading();
+    });
+
+    renderChips();
+    fetchReading();
   }
 
   function escapeHtml(value) {

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/config/includes/auth.php';
+require_once __DIR__ . '/config/includes/mail.php';
 
 if (is_logged_in()) {
     redirect(home_link_for_role());
@@ -10,51 +11,61 @@ if (is_logged_in()) {
 
 // GET मा फेरि सुरु गर्ने
 if (!is_post()) {
-    unset($_SESSION['reset_user_id']);
+    unset($_SESSION['reset_user_id'], $_SESSION['reset_email']);
 }
 
 $base  = base_path();
 $error = '';
 $email = '';
-$phone = '';
 
 if (is_post()) {
     require_csrf();
 
     $step = post('step');
 
-    // चरण १ : इमेल + फोन मिलाउने
-    if ($step === 'verify') {
-        unset($_SESSION['reset_user_id']);
+    // चरण १ : इमेल मागेर OTP पठाउने
+    if ($step === 'send') {
+        unset($_SESSION['reset_user_id'], $_SESSION['reset_email']);
 
         $email = post('email');
-        $phone = post('phone_np');
 
-        if ($email === '' || $phone === '') {
-            $error = 'इमेल र फोन नम्बर दुवै आवश्यक छ।';
+        if (!is_valid_email($email)) {
+            $error = 'सही इमेल ठेगाना लेख्नुहोस्।';
         } else {
-            $row = fetch_one(
-                'SELECT id FROM users WHERE email = :e AND phone_np = :p LIMIT 1',
-                [':e' => $email, ':p' => $phone]
-            );
+            $row = fetch_one('SELECT id FROM users WHERE email = :e LIMIT 1', [':e' => $email]);
 
             if ($row === null) {
-                $error = 'इमेल र फोन नम्बर मिलेन। पुनः जाँच गर्नुहोस्।';
+                $error = 'यो इमेलमा दर्ता भएको खाता भेटिएन।';
             } else {
-                // मिल्यो — अब नयाँ पासवर्ड राख्न दिने
-                $_SESSION['reset_user_id'] = (int) $row['id'];
+                $userId = (int) $row['id'];
+                $otp    = (string) random_int(100000, 999999);
+
+                execute(
+                    'UPDATE users SET otp_hash = :h, otp_expires_at = DATE_ADD(NOW(), INTERVAL 10 MINUTE) WHERE id = :id',
+                    [':h' => password_hash($otp, PASSWORD_DEFAULT), ':id' => $userId]
+                );
+
+                if (send_otp_email($email, $otp)) {
+                    $_SESSION['reset_user_id'] = $userId;
+                    $_SESSION['reset_email']   = $email;
+                } else {
+                    $error = 'इमेल पठाउन सकिएन। केही समयपछि पुनः प्रयास गर्नुहोस्।';
+                }
             }
         }
     }
 
-    // चरण २ : नयाँ पासवर्ड राख्ने
+    // चरण २ : OTP जाँचेर नयाँ पासवर्ड राख्ने
     if ($step === 'reset') {
         $userId  = $_SESSION['reset_user_id'] ?? null;
+        $otp     = post('otp');
         $new     = post('password');
         $confirm = post('password_confirm');
 
         if ($userId === null) {
-            $error = 'पहिले इमेल र फोन नम्बर प्रमाणित गर्नुहोस्।';
+            $error = 'पहिले इमेलमा आएको OTP मागिएको छ।';
+        } elseif (!preg_match('/^\d{6}$/', $otp)) {
+            $error = 'OTP ६ अंकको हुनुपर्छ।';
         } elseif (mb_strlen($new) < PASSWORD_MIN_LEN) {
             $error = 'पासवर्ड कम्तीमा ' . PASSWORD_MIN_LEN . ' अक्षरको हुनुपर्छ।';
         } elseif (!preg_match('/[A-Za-z]/', $new) || !preg_match('/\d/', $new)) {
@@ -62,21 +73,37 @@ if (is_post()) {
         } elseif ($new !== $confirm) {
             $error = 'पासवर्ड दुवै मिल्दैनन्।';
         } else {
-            execute(
-                'UPDATE users SET password_hash = :h WHERE id = :id',
-                [':h' => password_hash($new, PASSWORD_DEFAULT), ':id' => $userId]
+            $otpRow = fetch_one(
+                'SELECT otp_hash, otp_expires_at FROM users WHERE id = :id',
+                [':id' => $userId]
             );
 
-            log_activity((int) $userId, 'reset_password', 'users', (int) $userId);
-            unset($_SESSION['reset_user_id']);
+            $otpOk = $otpRow !== null
+                && $otpRow['otp_hash'] !== null
+                && password_verify($otp, (string) $otpRow['otp_hash'])
+                && $otpRow['otp_expires_at'] !== null
+                && strtotime((string) $otpRow['otp_expires_at']) >= time();
 
-            flash('success', 'Password changed. Please sign in.');
-            redirect('login.php');
+            if (!$otpOk) {
+                $error = 'OTP गलत वा म्याद सकिएको छ। फेरि पठाउनुहोस्।';
+            } else {
+                execute(
+                    'UPDATE users SET password_hash = :h, otp_hash = NULL, otp_expires_at = NULL WHERE id = :id',
+                    [':h' => password_hash($new, PASSWORD_DEFAULT), ':id' => $userId]
+                );
+
+                log_activity((int) $userId, 'reset_password', 'users', (int) $userId);
+                unset($_SESSION['reset_user_id'], $_SESSION['reset_email']);
+
+                flash('success', 'Password changed. Please sign in.');
+                redirect('login.php');
+            }
         }
     }
 }
 
-$showReset = isset($_SESSION['reset_user_id']);
+$showOtp   = isset($_SESSION['reset_user_id']);
+$resetMail = (string) ($_SESSION['reset_email'] ?? '');
 
 $pageTitle = 'पासवर्ड रिसेट';
 require __DIR__ . '/config/includes/header.php';
@@ -85,9 +112,9 @@ require __DIR__ . '/config/includes/header.php';
 <div class="auth-wrap">
   <div class="card auth-card">
 
-    <?php if (!$showReset): ?>
+    <?php if (!$showOtp): ?>
       <h1>पासवर्ड बिर्सनुभयो?</h1>
-      <p class="muted">दर्ता भएको इमेल र फोन नम्बर मिलाउनुहोस्।</p>
+      <p class="muted">दर्ता भएको इमेल ठेगाना लेख्नुहोस् — उहाँको इमेलमा ६ अंकको OTP पठाइनेछ।</p>
 
       <?php if ($error !== ''): ?>
         <div class="alert alert-error"><?= e($error) ?></div>
@@ -95,22 +122,19 @@ require __DIR__ . '/config/includes/header.php';
 
       <form method="post" action="forgot.php" novalidate>
         <?= csrf_field() ?>
-        <input type="hidden" name="step" value="verify">
+        <input type="hidden" name="step" value="send">
 
         <label for="email">इमेल ठेगाना</label>
         <input type="email" id="email" name="email" value="<?= e($email) ?>" required autocomplete="email">
 
-        <label for="phone_np">मोबाइल नम्बर</label>
-        <input type="tel" id="phone_np" name="phone_np" value="<?= e($phone) ?>" required placeholder="98XXXXXXXX">
-
-        <button type="submit" class="btn btn-primary btn-block">जाँच गर्नुहोस्</button>
+        <button type="submit" class="btn btn-primary btn-block">OTP पठाउनुहोस्</button>
       </form>
 
       <p class="auth-alt">पासवर्ड याद छ? <a href="login.php">लगइन गर्नुहोस्</a></p>
 
     <?php else: ?>
-      <h1>नयाँ पासवर्ड</h1>
-      <p class="muted">इमेल र फोन नम्बर मिल्यो। अब नयाँ पासवर्ड राख्नुहोस्।</p>
+      <h1>OTP प्रमाणित गर्नुहोस्</h1>
+      <p class="muted"><?= e($resetMail) ?> मा ६ अंकको OTP पठाइएको छ। १० मिनेटभित्र प्रयोग गर्नुहोस्।</p>
 
       <?php if ($error !== ''): ?>
         <div class="alert alert-error"><?= e($error) ?></div>
@@ -119,6 +143,10 @@ require __DIR__ . '/config/includes/header.php';
       <form method="post" action="forgot.php" novalidate>
         <?= csrf_field() ?>
         <input type="hidden" name="step" value="reset">
+
+        <label for="otp">OTP</label>
+        <input type="text" id="otp" name="otp" inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
+               required autocomplete="one-time-code" placeholder="123456">
 
         <label for="password">नयाँ पासवर्ड</label>
         <input type="password" id="password" name="password" required minlength="8" autocomplete="new-password">
@@ -130,7 +158,14 @@ require __DIR__ . '/config/includes/header.php';
         <button type="submit" class="btn btn-primary btn-block">पासवर्ड राख्नुहोस्</button>
       </form>
 
-      <p class="auth-alt"><a href="forgot.php">अर्को इमेल / फोन प्रयोग गर्ने</a></p>
+      <form method="post" action="forgot.php" novalidate>
+        <?= csrf_field() ?>
+        <input type="hidden" name="step" value="send">
+        <input type="hidden" name="email" value="<?= e($resetMail) ?>">
+        <button type="submit" class="btn btn-ghost btn-block">OTP फेरि पठाउनुहोस्</button>
+      </form>
+
+      <p class="auth-alt"><a href="forgot.php">अर्को इमेल प्रयोग गर्नुहोस्</a></p>
     <?php endif; ?>
 
   </div>
