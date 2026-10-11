@@ -99,7 +99,7 @@ $topicNavCats = fetch_all(
     <a class="brand" href="<?= e($base) ?>views/learn.php">
       <img class="brand-logo" src="<?= e($base) ?>public/img/ganesh.png" width="34" height="34" alt="">
       <span class="brand-text">
-        <strong>Vedic Astrology Learn</strong>
+        <strong>Learn Vedic Astrology</strong>
         <small>सिकाइ • खोज • बुझाइ</small>
       </span>
     </a>
